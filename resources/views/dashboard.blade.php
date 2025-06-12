@@ -17,7 +17,7 @@
                     </a>
                     <a href="#" class="btn-secondary">
                         <i data-feather="play-circle"></i>
-                        Lihat Demo
+                        Lihat Demos
                     </a>
                 </div>
             </div>
