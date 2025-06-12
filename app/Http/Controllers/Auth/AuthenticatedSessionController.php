@@ -28,6 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (auth()->user()->email === 'dewa@email.com') {
+        return redirect()->route('admin.dashboard');
+    }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
