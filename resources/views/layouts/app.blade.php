@@ -7,7 +7,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <style>
-        /* ...CSS header/navbar, dropdown, dsb... */
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+                       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+       
     </style>
     @stack('styles')
 </head>

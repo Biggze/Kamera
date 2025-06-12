@@ -2,6 +2,7 @@
 
 @section('title', 'Login - CameraHub')
 
+<strong></strong>
 @section('content')
 <div class="auth-container">
     <div class="auth-card">

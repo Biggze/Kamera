@@ -43,8 +43,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        event(new Registered($user));
 
-        return redirect(route('/', absolute: false));
+        return redirect()->route('login')->with('status', 'Registrasi berhasil! Silakan login.');
     }
 }

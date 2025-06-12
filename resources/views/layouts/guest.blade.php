@@ -59,12 +59,13 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
         .auth-card {
+            width: 100%;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;

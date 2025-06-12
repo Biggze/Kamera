@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AboutController;
+use App\Http\Controllers\User\BrandController;
 use App\Http\Controllers\User\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/user/category', [CategoryController::class, 'index'])->name('user.category');
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::get('/user/brand', [BrandController::class, 'index'])->name('user.brand');
+    Route::get('/user/about', [AboutController::class, 'index'])->name('user.about');
 
 });
 

@@ -290,8 +290,8 @@
         <ul class="nav-links">
             <li><a href="{{ route('dashboard') }}">Beranda</a></li>
             <li><a href="{{route('user.category') }}">Kategori</a></li>
-            <li><a href="#brands">Brand</a></li>
-            <li><a href="#">Tentang</a></li>
+            <li><a href="{{ route('user.brand') }}">Brand</a></li>
+            <li><a href="{{ route('user.about') }}">Tentang</a></li>
             <li><a href="#contact">Kontak</a></li>
         </ul>
         @auth
