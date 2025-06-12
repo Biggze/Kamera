@@ -1,124 +1,273 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - CameraHub</title>
-    <script src="https://unpkg.com/feather-icons"></script>
-    @stack('styles')
-</head>
-<body>
-    <!-- Main Content -->
+
+@extends('layouts.admin')
+
+@section('title', 'Dashboard Admin')
+
+
+<style>
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--gray-dark);
+}
+
+.stat-change {
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stat-change.positive {
+    color: var(--success);
+}
+
+.stat-change.negative {
+    color: var(--danger);
+}
+
+/* Charts Row */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.chart-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.chart-period {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.chart-container {
+    height: 280px;
+    position: relative;
+}
+
+/* Bottom Row */
+.bottom-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.table-card, .products-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.table-header, .products-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.table-header h3, .products-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.view-all {
+    font-size: 0.875rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray);
+    white-space: nowrap;
+}
+
+th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--gray-dark);
+    text-transform: uppercase;
+}
+
+td {
+    font-size: 0.875rem;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status.pending {
+    background: rgba(237, 137, 54, 0.1);
+    color: var(--warning);
+}
+
+.status.processing {
+    background: rgba(66, 153, 225, 0.1);
+    color: var(--info);
+}
+
+.status.shipped {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+}
+
+.status.completed {
+    background: rgba(72, 187, 120, 0.1);
+    color: var(--success);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--gray-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    color: var(--primary);
+}
+
+/* Products List */
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.product-item:last-child {
+    border-bottom: none;
+}
+
+.product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--light);
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.product-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--gray-dark);
+}
+
+.product-meta .sales {
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.product-meta .price {
+    color: var(--primary);
+    font-weight: 600;
+}
+</style>
+@section('content')
     <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <i data-feather="camera"></i>
-                    <span>CameraHub</span>
-                    <small>Admin Panel</small>
-                </div>
-                <button class="sidebar-toggle">
-                    <i data-feather="menu"></i>
-                </button>
-            </div>
-            
-            <div class="sidebar-menu">
-                <ul>
-                    <li class="active">
-                        <a href="#">
-                            <i data-feather="home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="shopping-bag"></i>
-                            <span>Produk</span>
-                            <span class="badge">128</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="tag"></i>
-                            <span>Kategori</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="award"></i>
-                            <span>Brand</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="dollar-sign"></i>
-                            <span>Penjualan</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="users"></i>
-                            <span>Pelanggan</span>
-                            <span class="badge">24</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="truck"></i>
-                            <span>Pengiriman</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="message-square"></i>
-                            <span>Ulasan</span>
-                            <span class="badge">56</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i data-feather="settings"></i>
-                            <span>Pengaturan</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="avatar">
-                        <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff" alt="Admin">
-                    </div>
-                    <div class="user-info">
-                        <div class="name">Admin CameraHub</div>
-                        <div class="role">Super Admin</div>
-                    </div>
-                    <a href="#" class="logout">
-                        <i data-feather="log-out"></i>
-                    </a>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Content Area -->
         <main class="admin-content">
-            <!-- Header -->
-            <header class="admin-header">
-                <h1>Dashboard</h1>
-                <div class="header-actions">
-                    <div class="search-box">
-                        <i data-feather="search"></i>
-                        <input type="text" placeholder="Cari...">
-                    </div>
-                    <div class="notifications">
-                        <i data-feather="bell"></i>
-                        <span class="badge">5</span>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Stats Cards -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon" style="background: rgba(102, 126, 234, 0.1); color: #667eea;">
@@ -127,11 +276,13 @@
                     <div class="stat-info">
                         <div class="stat-value">Rp 42.850.000</div>
                         <div class="stat-label">Pendapatan Hari Ini</div>
+                        
+                        <div class="stat-change positive">
+                            <i data-feather="trending-up"></i>
+                            12.5%
+                        </div>
                     </div>
-                    <div class="stat-change positive">
-                        <i data-feather="trending-up"></i>
-                        12.5%
-                    </div>
+                    
                 </div>
                 
                 <div class="stat-card">
@@ -370,602 +521,9 @@
     </div>
 
     @stack('scripts')
-</body>
-</html>
-
-    <!-- Main Content -->
-   
 
 
 
-    <style>
-        /* Base Styles */
-        :root {
-            --primary: #667eea;
-            --primary-light: rgba(102, 126, 234, 0.1);
-            --secondary: #764ba2;
-            --success: #48bb78;
-            --danger: #f56565;
-            --warning: #ed8936;
-            --info: #4299e1;
-            --dark: #2d3748;
-            --light: #f7fafc;
-            --gray: #e2e8f0;
-            --gray-dark: #a0aec0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #2d3748;
-        }
-        
-        /* Admin Container */
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Styles */
-        .admin-sidebar {
-            width: 280px;
-            background: white;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-        
-        .sidebar-header {
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--gray);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        
-        .logo i {
-            width: 24px;
-            height: 24px;
-        }
-        
-        .logo small {
-            font-size: 0.75rem;
-            font-weight: 400;
-            color: var(--gray-dark);
-            display: block;
-            margin-top: 0.25rem;
-        }
-        
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            color: var(--gray-dark);
-            cursor: pointer;
-            display: none;
-        }
-        
-        .sidebar-menu {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-        
-        .sidebar-menu ul {
-            list-style: none;
-        }
-        
-        .sidebar-menu li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            color: var(--dark);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .sidebar-menu a:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-        
-        .sidebar-menu a.active {
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 500;
-        }
-        
-        .sidebar-menu a i {
-            width: 20px;
-            height: 20px;
-            margin-right: 0.75rem;
-        }
-        
-        .sidebar-menu .badge {
-            margin-left: auto;
-            background: var(--primary);
-            color: white;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 50px;
-        }
-        
-        .sidebar-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--gray);
-        }
-        
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .user-info {
-            flex: 1;
-        }
-        
-        .user-info .name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .user-info .role {
-            font-size: 0.75rem;
-            color: var(--gray-dark);
-        }
-        
-        .logout {
-            color: var(--gray-dark);
-            transition: all 0.3s ease;
-        }
-        
-        .logout:hover {
-            color: var(--danger);
-        }
-        
-        /* Admin Content */
-        .admin-content {
-            flex: 1;
-            padding: 2rem;
-            overflow-x: hidden;
-        }
-        
-        /* Admin Header */
-        .admin-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-        
-        .admin-header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .search-box {
-            position: relative;
-            width: 250px;
-        }
-        
-        .search-box i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-dark);
-        }
-        
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--gray);
-            border-radius: 8px;
-            background: white;
-            transition: all 0.3s ease;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-        
-        .notifications {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .notifications:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-        
-        .notifications .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--danger);
-            color: white;
-            font-size: 0.6rem;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-        
-        .stat-info {
-            flex: 1;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-        
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--gray-dark);
-        }
-        
-        .stat-change {
-            font-size: 0.875rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .stat-change.positive {
-            color: var(--success);
-        }
-        
-        .stat-change.negative {
-            color: var(--danger);
-        }
-        
-        /* Charts Row */
-        .charts-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .chart-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-        }
-        
-        .chart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-        
-        .chart-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        
-        .chart-period {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--gray);
-            border-radius: 8px;
-            background: white;
-            font-size: 0.875rem;
-            cursor: pointer;
-        }
-        
-        .chart-container {
-            height: 280px;
-            position: relative;
-        }
-        
-        /* Bottom Row */
-        .bottom-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-        }
-        
-        .table-card, .products-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-        }
-        
-        .table-header, .products-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-        
-        .table-header h3, .products-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        
-        .view-all {
-            font-size: 0.875rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray);
-            white-space: nowrap;
-        }
-        
-        th {
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--gray-dark);
-            text-transform: uppercase;
-        }
-        
-        td {
-            font-size: 0.875rem;
-        }
-        
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .status.pending {
-            background: rgba(237, 137, 54, 0.1);
-            color: var(--warning);
-        }
-        
-        .status.processing {
-            background: rgba(66, 153, 225, 0.1);
-            color: var(--info);
-        }
-        
-        .status.shipped {
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary);
-        }
-        
-        .status.completed {
-            background: rgba(72, 187, 120, 0.1);
-            color: var(--success);
-        }
-        
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--gray-dark);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .action-btn:hover {
-            color: var(--primary);
-        }
-        
-        /* Products List */
-        .products-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .product-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--gray);
-        }
-        
-        .product-item:last-child {
-            border-bottom: none;
-        }
-        
-        .product-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--light);
-        }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .product-info {
-            flex: 1;
-        }
-        
-        .product-info h4 {
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        
-        .product-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.75rem;
-            color: var(--gray-dark);
-        }
-        
-        .product-meta .sales {
-            color: var(--dark);
-            font-weight: 500;
-        }
-        
-        .product-meta .price {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .admin-sidebar {
-                position: fixed;
-                left: -280px;
-                height: 100vh;
-            }
-            
-            .admin-sidebar.active {
-                left: 0;
-            }
-            
-            .sidebar-toggle {
-                display: block;
-            }
-            
-            .admin-content {
-                margin-left: 0;
-                width: 100%;
-            }
-            
-            .bottom-row {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .charts-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .header-actions {
-                width: 100%;
-                justify-content: flex-end;
-            }
-            
-            .search-box {
-                width: auto;
-                flex: 1;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-        }
-    </style>
 
 
 
@@ -1090,3 +648,5 @@
             });
         });
     </script>
+</body>
+@endsection

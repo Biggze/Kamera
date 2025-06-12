@@ -48,8 +48,8 @@
                 <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff" alt="Admin">
             </div>
             <div class="user-info">
-                <div class="name">Admin CameraHub</div>
-                <div class="role">Super Admin</div>
+                <div class="name">Nopal</div>
+                <div class="role">Admin</div>
             </div>
             <a href="#" class="logout"><i data-feather="log-out"></i></a>
         </div>
