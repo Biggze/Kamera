@@ -274,7 +274,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
     display: none;
 }
 
@@ -289,7 +288,7 @@
             CameraHub
         </div>
         <ul class="nav-links">
-            <li><a href="/">Beranda</a></li>
+            <li><a href="{{ route('dashboard') }}">Beranda</a></li>
             <li><a href="{{route('user.category') }}">Kategori</a></li>
             <li><a href="#brands">Brand</a></li>
             <li><a href="#">Tentang</a></li>
@@ -315,12 +314,13 @@
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i data-feather="settings"></i> Profile
                     </a>
-                    <form method="POST" action="{{ route('logout') }}" class="dropdown-form">
-                        @csrf
-                        <button type="submit" class="dropdown-item logout-btn">
-                            <i data-feather="log-out"></i> Logout
-                        </button>
-                    </form>
+                    
+<form method="POST" action="{{ route('logout') }}" onsubmit="event.stopPropagation();">
+    @csrf
+    <button type="submit" class="dropdown-item logout-btn">
+        <i data-feather="log-out"></i> Logout
+    </button>
+</form>
                 </div>
             </div>
         @endauth
