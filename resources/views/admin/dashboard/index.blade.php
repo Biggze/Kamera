@@ -133,7 +133,6 @@
 
 /* Bottom Row */
 .bottom-row {
-    display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
 }
@@ -566,76 +565,6 @@ td {
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    
-    <!-- Top Products -->
-    <div class="products-card">
-        <div class="products-header">
-            <h3>Produk Terlaris</h3>
-            <a href="#" class="view-all">Lihat Semua</a>
-        </div>
-        <div class="products-list">
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/60x60/667eea/ffffff?text=CAM" alt="Canon EOS R6">
-                </div>
-                <div class="product-info">
-                    <h4>Canon EOS R6 Mark II</h4>
-                    <div class="product-meta">
-                        <span class="sales">28 Terjual</span>
-                        <span class="price">Rp 42.999.000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/60x60/48bb78/ffffff?text=SON" alt="Sony A7 IV">
-                </div>
-                <div class="product-info">
-                    <h4>Sony A7 IV Body</h4>
-                    <div class="product-meta">
-                        <span class="sales">24 Terjual</span>
-                        <span class="price">Rp 38.500.000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/60x60/ed8936/ffffff?text=GO" alt="GoPro HERO11">
-                </div>
-                <div class="product-info">
-                    <h4>GoPro HERO11 Black</h4>
-                    <div class="product-meta">
-                        <span class="sales">22 Terjual</span>
-                        <span class="price">Rp 7.999.000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/60x60/4299e1/ffffff?text=RF" alt="Canon RF 24-70mm">
-                </div>
-                <div class="product-info">
-                    <h4>Canon RF 24-70mm f/2.8L</h4>
-                    <div class="product-meta">
-                        <span class="sales">18 Terjual</span>
-                        <span class="price">Rp 32.750.000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="product-image">
-                    <img src="https://via.placeholder.com/60x60/764ba2/ffffff?text=NIK" alt="Nikon Z6 II">
-                </div>
-                <div class="product-info">
-                    <h4>Nikon Z6 II Body</h4>
-                    <div class="product-meta">
-                        <span class="sales">15 Terjual</span>
-                        <span class="price">Rp 36.750.000</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\BrandAdminController;
 use App\Http\Controllers\Admin\CategoryAdminController;
+use App\Http\Controllers\Admin\CustomerAdminController;
+use App\Http\Controllers\Admin\PenjualanAdminController;
 use App\Http\Controllers\Admin\ProdukAdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +44,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/product', [ProdukAdminController::class, 'index'])->name('admin.product');
     Route::get('/admin/brand', [BrandAdminController::class, 'index'])->name('admin.brand');
     Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
+   
+    Route::get('/admin/penjualan', [PenjualanAdminController::class, 'index'])->name('admin.sales');
+    Route::get('/admin/customer', [CustomerAdminController::class, 'index'])->name('admin.customer');
 });
 
 require __DIR__.'/auth.php';

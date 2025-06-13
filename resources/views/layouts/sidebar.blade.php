@@ -24,10 +24,10 @@
                 <a href="{{ route('admin.brand') }}"><i data-feather="award"></i><span>Brand</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.sales') ? 'active' : '' }}">
-                <a href="#"><i data-feather="dollar-sign"></i><span>Penjualan</span></a>
+                <a href="{{ route('admin.sales') }}"><i data-feather="dollar-sign"></i><span>Penjualan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.customer') ? 'active' : '' }}">
-                <a href="#"><i data-feather="users"></i><span>Pelanggan</span></a>
+                <a href="{{ route('admin.customer') }}"><i data-feather="users"></i><span>Pelanggan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
                 <a href="#"><i data-feather="truck"></i><span>Pengiriman</span></a>
