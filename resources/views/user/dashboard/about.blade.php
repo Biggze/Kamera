@@ -10,7 +10,7 @@
             <h1><span>Tentang</span> CameraHub</h1>
             <p>CameraHub adalah marketplace kamera dan aksesoris fotografi terlengkap yang didedikasikan untuk membantu setiap orang menemukan peralatan terbaik untuk hobi dan profesi fotografi mereka.</p>
             <div class="about-hero-buttons">
-                <a href="{{ url('/') }}" class="about-btn-primary">
+                <a href="{{ route('dashboard') }}" class="about-btn-primary">
                     <i data-feather="home"></i> Kembali ke Beranda
                 </a>
                 <a href="#tim" class="about-btn-secondary">

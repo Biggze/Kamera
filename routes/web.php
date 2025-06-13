@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandAdminController;
+use App\Http\Controllers\Admin\CategoryAdminController;
+use App\Http\Controllers\Admin\ProdukAdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AboutController;
@@ -7,6 +10,8 @@ use App\Http\Controllers\User\BrandController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\ContactController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 
 Route::get('/', function () {
@@ -28,10 +33,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/contact', [ContactController::class, 'index'])->name('user.contact');
 
 });
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard.index');
+    })->name('admin.dashboard');
 
-
-Route::middleware(['auth'])->get('/admin/dashboard', function () {
-    return view('admin.dashboard.index');
-})->name('admin.dashboard');
+    Route::get('/admin/category', [CategoryAdminController::class, 'index'])->name('admin.category');
+    Route::get('/admin/product', [ProdukAdminController::class, 'index'])->name('admin.product');
+    Route::get('/admin/brand', [BrandAdminController::class, 'index'])->name('admin.brand');
+    Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
+});
 
 require __DIR__.'/auth.php';

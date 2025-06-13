@@ -568,7 +568,7 @@
     <section class="breadcrumb">
         <div class="breadcrumb-container">
             <nav>
-                <a href="#">Beranda</a>
+                <a href="{{ route('dashboard') }}">Beranda</a>
                 <i data-feather="chevron-right"></i>
                 <span>Kategori</span>
             </nav>

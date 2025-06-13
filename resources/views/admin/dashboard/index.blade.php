@@ -1,9 +1,8 @@
-
 @extends('layouts.admin')
 
 @section('title', 'Dashboard Admin')
 
-
+@push('styles')
 <style>
 .stats-grid {
     display: grid;
@@ -13,13 +12,20 @@
 }
 
 .stat-card {
-    background: white;
+    background: var(--white);
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray);
     display: flex;
     align-items: center;
     gap: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .stat-icon {
@@ -30,21 +36,26 @@
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
+    flex-shrink: 0;
 }
 
 .stat-info {
     flex: 1;
+    min-width: 0;
 }
 
 .stat-value {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
+    color: var(--dark);
+    line-height: 1.2;
 }
 
 .stat-label {
     font-size: 0.875rem;
-    color: var(--gray-dark);
+    color: var(--gray-darker);
+    margin-bottom: 0.5rem;
 }
 
 .stat-change {
@@ -63,6 +74,11 @@
     color: var(--danger);
 }
 
+.stat-change i {
+    width: 14px;
+    height: 14px;
+}
+
 /* Charts Row */
 .charts-row {
     display: grid;
@@ -72,9 +88,10 @@
 }
 
 .chart-card {
-    background: white;
+    background: var(--white);
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray);
     padding: 1.5rem;
 }
 
@@ -88,15 +105,25 @@
 .chart-header h3 {
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--dark);
+    margin: 0;
 }
 
 .chart-period {
     padding: 0.5rem 1rem;
     border: 1px solid var(--gray);
     border-radius: 8px;
-    background: white;
+    background: var(--white);
     font-size: 0.875rem;
     cursor: pointer;
+    color: var(--dark);
+    transition: all 0.2s ease;
+}
+
+.chart-period:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 .chart-container {
@@ -112,9 +139,10 @@
 }
 
 .table-card, .products-card {
-    background: white;
+    background: var(--white);
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray);
     padding: 1.5rem;
 }
 
@@ -128,6 +156,8 @@
 .table-header h3, .products-header h3 {
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--dark);
+    margin: 0;
 }
 
 .view-all {
@@ -135,6 +165,12 @@
     color: var(--primary);
     text-decoration: none;
     font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.view-all:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
 .table-responsive {
@@ -156,12 +192,14 @@ th, td {
 th {
     font-weight: 600;
     font-size: 0.875rem;
-    color: var(--gray-dark);
+    color: var(--gray-darker);
     text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 td {
     font-size: 0.875rem;
+    color: var(--dark);
 }
 
 .status {
@@ -170,6 +208,7 @@ td {
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 500;
+    text-transform: capitalize;
 }
 
 .status.pending {
@@ -195,13 +234,21 @@ td {
 .action-btn {
     background: none;
     border: none;
-    color: var(--gray-dark);
+    color: var(--gray-darker);
     cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .action-btn:hover {
     color: var(--primary);
+    background: var(--primary-light);
+}
+
+.action-btn i {
+    width: 16px;
+    height: 16px;
 }
 
 /* Products List */
@@ -228,7 +275,8 @@ td {
     height: 60px;
     border-radius: 8px;
     overflow: hidden;
-    background: var(--light);
+    background: var(--gray-light);
+    flex-shrink: 0;
 }
 
 .product-image img {
@@ -239,12 +287,15 @@ td {
 
 .product-info {
     flex: 1;
+    min-width: 0;
 }
 
 .product-info h4 {
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
+    color: var(--dark);
+    line-height: 1.4;
 }
 
 .product-meta {
@@ -252,7 +303,7 @@ td {
     align-items: center;
     gap: 1rem;
     font-size: 0.75rem;
-    color: var(--gray-dark);
+    color: var(--gray-darker);
 }
 
 .product-meta .sales {
@@ -264,389 +315,436 @@ td {
     color: var(--primary);
     font-weight: 600;
 }
-</style>
-@section('content')
-    <div class="admin-container">
-        <main class="admin-content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(102, 126, 234, 0.1); color: #667eea;">
-                        <i data-feather="dollar-sign"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">Rp 42.850.000</div>
-                        <div class="stat-label">Pendapatan Hari Ini</div>
-                        
-                        <div class="stat-change positive">
-                            <i data-feather="trending-up"></i>
-                            12.5%
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(75, 192, 192, 0.1); color: #4bc0c0;">
-                        <i data-feather="shopping-bag"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">48</div>
-                        <div class="stat-label">Pesanan Hari Ini</div>
-                    </div>
-                    <div class="stat-change positive">
-                        <i data-feather="trending-up"></i>
-                        8.3%
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(255, 159, 64, 0.1); color: #ff9f40;">
-                        <i data-feather="users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">24</div>
-                        <div class="stat-label">Pelanggan Baru</div>
-                    </div>
-                    <div class="stat-change negative">
-                        <i data-feather="trending-down"></i>
-                        4.2%
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: rgba(153, 102, 255, 0.1); color: #9966ff;">
-                        <i data-feather="package"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value">128</div>
-                        <div class="stat-label">Produk Tersedia</div>
-                    </div>
-                    <div class="stat-change positive">
-                        <i data-feather="trending-up"></i>
-                        5.6%
-                    </div>
-                </div>
-            </div>
 
-            <!-- Charts Row -->
-            <div class="charts-row">
-                <!-- Sales Chart -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>Statistik Penjualan</h3>
-                        <select class="chart-period">
-                            <option>7 Hari Terakhir</option>
-                            <option>30 Hari Terakhir</option>
-                            <option selected>Bulan Ini</option>
-                            <option>Tahun Ini</option>
-                        </select>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="salesChart"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Revenue Chart -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3>Pendapatan Bulanan</h3>
-                        <select class="chart-period">
-                            <option>2023</option>
-                            <option selected>2024</option>
-                        </select>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Row -->
-            <div class="bottom-row">
-                <!-- Recent Orders -->
-                <div class="table-card">
-                    <div class="table-header">
-                        <h3>Pesanan Terbaru</h3>
-                        <a href="#" class="view-all">Lihat Semua</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID Pesanan</th>
-                                    <th>Pelanggan</th>
-                                    <th>Tanggal</th>
-                                    <th>Jumlah</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#CH7852</td>
-                                    <td>Andi Wijaya</td>
-                                    <td>12 Mei 2024</td>
-                                    <td>Rp 8.750.000</td>
-                                    <td><span class="status shipped">Dikirim</span></td>
-                                    <td>
-                                        <button class="action-btn">
-                                            <i data-feather="eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#CH7851</td>
-                                    <td>Budi Santoso</td>
-                                    <td>12 Mei 2024</td>
-                                    <td>Rp 12.499.000</td>
-                                    <td><span class="status processing">Diproses</span></td>
-                                    <td>
-                                        <button class="action-btn">
-                                            <i data-feather="eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#CH7850</td>
-                                    <td>Citra Dewi</td>
-                                    <td>11 Mei 2024</td>
-                                    <td>Rp 5.250.000</td>
-                                    <td><span class="status completed">Selesai</span></td>
-                                    <td>
-                                        <button class="action-btn">
-                                            <i data-feather="eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#CH7849</td>
-                                    <td>Dian Permata</td>
-                                    <td>11 Mei 2024</td>
-                                    <td>Rp 32.999.000</td>
-                                    <td><span class="status pending">Menunggu Pembayaran</span></td>
-                                    <td>
-                                        <button class="action-btn">
-                                            <i data-feather="eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#CH7848</td>
-                                    <td>Eko Prasetyo</td>
-                                    <td>10 Mei 2024</td>
-                                    <td>Rp 7.850.000</td>
-                                    <td><span class="status shipped">Dikirim</span></td>
-                                    <td>
-                                        <button class="action-btn">
-                                            <i data-feather="eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- Top Products -->
-                <div class="products-card">
-                    <div class="products-header">
-                        <h3>Produk Terlaris</h3>
-                        <a href="#" class="view-all">Lihat Semua</a>
-                    </div>
-                    <div class="products-list">
-                        <div class="product-item">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60" alt="Canon EOS R6">
-                            </div>
-                            <div class="product-info">
-                                <h4>Canon EOS R6 Mark II</h4>
-                                <div class="product-meta">
-                                    <span class="sales">28 Terjual</span>
-                                    <span class="price">Rp 42.999.000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60" alt="Sony A7 IV">
-                            </div>
-                            <div class="product-info">
-                                <h4>Sony A7 IV Body</h4>
-                                <div class="product-meta">
-                                    <span class="sales">24 Terjual</span>
-                                    <span class="price">Rp 38.500.000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60" alt="GoPro HERO11">
-                            </div>
-                            <div class="product-info">
-                                <h4>GoPro HERO11 Black</h4>
-                                <div class="product-meta">
-                                    <span class="sales">22 Terjual</span>
-                                    <span class="price">Rp 7.999.000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60" alt="Canon RF 24-70mm">
-                            </div>
-                            <div class="product-info">
-                                <h4>Canon RF 24-70mm f/2.8L</h4>
-                                <div class="product-meta">
-                                    <span class="sales">18 Terjual</span>
-                                    <span class="price">Rp 32.750.000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60" alt="Nikon Z6 II">
-                            </div>
-                            <div class="product-info">
-                                <h4>Nikon Z6 II Body</h4>
-                                <div class="product-meta">
-                                    <span class="sales">15 Terjual</span>
-                                    <span class="price">Rp 36.750.000</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    @stack('scripts')
-
-
-
-
-
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .bottom-row {
+        grid-template-columns: 1fr;
+    }
     
-    <script>
-        feather.replace();
-        
-        // Toggle sidebar on mobile
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const sidebar = document.querySelector('.admin-sidebar');
-        
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-        
-        // Initialize charts
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sales Chart
-            const salesCtx = document.getElementById('salesChart').getContext('2d');
-            const salesChart = new Chart(salesCtx, {
-                type: 'line',
-                data: {
-                    labels: ['1 Mei', '5 Mei', '10 Mei', '15 Mei', '20 Mei', '25 Mei', '30 Mei'],
-                    datasets: [{
-                        label: 'Penjualan',
-                        data: [12, 19, 15, 25, 18, 30, 28],
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        borderColor: '#667eea',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                drawBorder: false
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Revenue Chart
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            const revenueChart = new Chart(revenueCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                    datasets: [{
-                        label: 'Pendapatan (Juta Rp)',
-                        data: [85, 92, 78, 95, 120, 105, 110, 115, 125, 140, 130, 150],
-                        backgroundColor: [
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)',
-                            'rgba(102, 126, 234, 0.7)'
-                        ],
-                        borderColor: [
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea',
-                            '#667eea'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                drawBorder: false
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-</body>
+    .charts-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.25rem;
+    }
+    
+    .stat-value {
+        font-size: 1.25rem;
+    }
+    
+    .chart-card, .table-card, .products-card {
+        padding: 1.25rem;
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .table-responsive {
+        margin: 0 -1.25rem;
+        padding: 0 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .stat-value {
+        font-size: 1.125rem;
+    }
+    
+    th, td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .product-item {
+        gap: 0.75rem;
+    }
+    
+    .product-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+@endpush
+
+@section('content')
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(102, 126, 234, 0.1); color: var(--primary);">
+            <i data-feather="dollar-sign"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">Rp 42.850.000</div>
+            <div class="stat-label">Pendapatan Hari Ini</div>
+            <div class="stat-change positive">
+                <i data-feather="trending-up"></i>
+                12.5%
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(72, 187, 120, 0.1); color: var(--success);">
+            <i data-feather="shopping-bag"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">48</div>
+            <div class="stat-label">Pesanan Hari Ini</div>
+            <div class="stat-change positive">
+                <i data-feather="trending-up"></i>
+                8.3%
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(237, 137, 54, 0.1); color: var(--warning);">
+            <i data-feather="users"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">24</div>
+            <div class="stat-label">Pelanggan Baru</div>
+            <div class="stat-change negative">
+                <i data-feather="trending-down"></i>
+                4.2%
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(66, 153, 225, 0.1); color: var(--info);">
+            <i data-feather="package"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">128</div>
+            <div class="stat-label">Produk Tersedia</div>
+            <div class="stat-change positive">
+                <i data-feather="trending-up"></i>
+                5.6%
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="charts-row">
+    <!-- Sales Chart -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Statistik Penjualan</h3>
+            <select class="chart-period">
+                <option>7 Hari Terakhir</option>
+                <option>30 Hari Terakhir</option>
+                <option selected>Bulan Ini</option>
+                <option>Tahun Ini</option>
+            </select>
+        </div>
+        <div class="chart-container">
+            <canvas id="salesChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Revenue Chart -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Pendapatan Bulanan</h3>
+            <select class="chart-period">
+                <option>2023</option>
+                <option selected>2024</option>
+            </select>
+        </div>
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Row -->
+<div class="bottom-row">
+    <!-- Recent Orders -->
+    <div class="table-card">
+        <div class="table-header">
+            <h3>Pesanan Terbaru</h3>
+            <a href="#" class="view-all">Lihat Semua</a>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pesanan</th>
+                        <th>Pelanggan</th>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#CH7852</td>
+                        <td>Andi Wijaya</td>
+                        <td>12 Mei 2024</td>
+                        <td>Rp 8.750.000</td>
+                        <td><span class="status shipped">Dikirim</span></td>
+                        <td>
+                            <button class="action-btn">
+                                <i data-feather="eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#CH7851</td>
+                        <td>Budi Santoso</td>
+                        <td>12 Mei 2024</td>
+                        <td>Rp 12.499.000</td>
+                        <td><span class="status processing">Diproses</span></td>
+                        <td>
+                            <button class="action-btn">
+                                <i data-feather="eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#CH7850</td>
+                        <td>Citra Dewi</td>
+                        <td>11 Mei 2024</td>
+                        <td>Rp 5.250.000</td>
+                        <td><span class="status completed">Selesai</span></td>
+                        <td>
+                            <button class="action-btn">
+                                <i data-feather="eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#CH7849</td>
+                        <td>Dian Permata</td>
+                        <td>11 Mei 2024</td>
+                        <td>Rp 32.999.000</td>
+                        <td><span class="status pending">Menunggu Pembayaran</span></td>
+                        <td>
+                            <button class="action-btn">
+                                <i data-feather="eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#CH7848</td>
+                        <td>Eko Prasetyo</td>
+                        <td>10 Mei 2024</td>
+                        <td>Rp 7.850.000</td>
+                        <td><span class="status shipped">Dikirim</span></td>
+                        <td>
+                            <button class="action-btn">
+                                <i data-feather="eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Top Products -->
+    <div class="products-card">
+        <div class="products-header">
+            <h3>Produk Terlaris</h3>
+            <a href="#" class="view-all">Lihat Semua</a>
+        </div>
+        <div class="products-list">
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/60x60/667eea/ffffff?text=CAM" alt="Canon EOS R6">
+                </div>
+                <div class="product-info">
+                    <h4>Canon EOS R6 Mark II</h4>
+                    <div class="product-meta">
+                        <span class="sales">28 Terjual</span>
+                        <span class="price">Rp 42.999.000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/60x60/48bb78/ffffff?text=SON" alt="Sony A7 IV">
+                </div>
+                <div class="product-info">
+                    <h4>Sony A7 IV Body</h4>
+                    <div class="product-meta">
+                        <span class="sales">24 Terjual</span>
+                        <span class="price">Rp 38.500.000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/60x60/ed8936/ffffff?text=GO" alt="GoPro HERO11">
+                </div>
+                <div class="product-info">
+                    <h4>GoPro HERO11 Black</h4>
+                    <div class="product-meta">
+                        <span class="sales">22 Terjual</span>
+                        <span class="price">Rp 7.999.000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/60x60/4299e1/ffffff?text=RF" alt="Canon RF 24-70mm">
+                </div>
+                <div class="product-info">
+                    <h4>Canon RF 24-70mm f/2.8L</h4>
+                    <div class="product-meta">
+                        <span class="sales">18 Terjual</span>
+                        <span class="price">Rp 32.750.000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-item">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/60x60/764ba2/ffffff?text=NIK" alt="Nikon Z6 II">
+                </div>
+                <div class="product-info">
+                    <h4>Nikon Z6 II Body</h4>
+                    <div class="product-meta">
+                        <span class="sales">15 Terjual</span>
+                        <span class="price">Rp 36.750.000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Initialize charts
+document.addEventListener('DOMContentLoaded', function() {
+    // Sales Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: ['1 Mei', '5 Mei', '10 Mei', '15 Mei', '20 Mei', '25 Mei', '30 Mei'],
+            datasets: [{
+                label: 'Penjualan',
+                data: [12, 19, 15, 25, 18, 30, 28],
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderColor: 'rgba(102, 126, 234, 1)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawBorder: false,
+                        color: 'rgba(0,0,0,0.05)'
+                    },
+                    ticks: {
+                        color: '#718096'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#718096'
+                    }
+                }
+            }
+        }
+    });
+    
+    // Revenue Chart
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    const revenueChart = new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+            datasets: [{
+                label: 'Pendapatan (Juta Rp)',
+                data: [85, 92, 78, 95, 120, 105, 110, 115, 125, 140, 130, 150],
+                backgroundColor: 'rgba(102, 126, 234, 0.7)',
+                borderColor: 'rgba(102, 126, 234, 1)',
+                borderWidth: 1,
+                borderRadius: 4,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawBorder: false,
+                        color: 'rgba(0,0,0,0.05)'
+                    },
+                    ticks: {
+                        color: '#718096'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#718096'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+@endpush

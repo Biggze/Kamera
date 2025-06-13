@@ -3,7 +3,6 @@
         <div class="logo">
             <i data-feather="camera"></i>
             <span>CameraHub</span>
-            <small>Admin Panel</small>
         </div>
         <button class="sidebar-toggle">
             <i data-feather="menu"></i>
@@ -12,31 +11,31 @@
 
     <div class="sidebar-menu">
         <ul>
-            <li class="active">
-                <a href="#"><i data-feather="home"></i><span>Dashboard</span></a>
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}"><i data-feather="home"></i><span>Dashboard</span></a>
             </li>
-            <li>
-                <a href="#"><i data-feather="shopping-bag"></i><span>Produk</span><span class="badge">128</span></a>
+            <li class="{{ request()->routeIs('admin.product') ? 'active' : '' }}">
+                <a href="{{ route('admin.product') }}"><i data-feather="shopping-bag"></i><span>Produk</span></a>
             </li>
-            <li>
-                <a href="#"><i data-feather="tag"></i><span>Kategori</span></a>
+            <li class="{{ request()->routeIs('admin.category') ? 'active' : '' }}">
+                <a href="{{ route('admin.category') }}"><i data-feather="tag"></i><span>Kategori</span></a>
             </li>
-            <li>
-                <a href="#"><i data-feather="award"></i><span>Brand</span></a>
+            <li class="{{ request()->routeIs('admin.brand') ? 'active' : '' }}">
+                <a href="{{ route('admin.brand') }}"><i data-feather="award"></i><span>Brand</span></a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.sales') ? 'active' : '' }}">
                 <a href="#"><i data-feather="dollar-sign"></i><span>Penjualan</span></a>
             </li>
-            <li>
-                <a href="#"><i data-feather="users"></i><span>Pelanggan</span><span class="badge">24</span></a>
+            <li class="{{ request()->routeIs('admin.customer') ? 'active' : '' }}">
+                <a href="#"><i data-feather="users"></i><span>Pelanggan</span></a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
                 <a href="#"><i data-feather="truck"></i><span>Pengiriman</span></a>
             </li>
-            <li>
-                <a href="#"><i data-feather="message-square"></i><span>Ulasan</span><span class="badge">56</span></a>
+            <li class="{{ request()->routeIs('admin.review') ? 'active' : '' }}">
+                <a href="#"><i data-feather="message-square"></i><span>Ulasan</span></a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                 <a href="#"><i data-feather="settings"></i><span>Pengaturan</span></a>
             </li>
         </ul>
@@ -48,10 +47,15 @@
                 <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff" alt="Admin">
             </div>
             <div class="user-info">
-                <div class="name">Nopal</div>
+                {{ Auth::user()->name }}
                 <div class="role">Admin</div>
             </div>
-            <a href="#" class="logout"><i data-feather="log-out"></i></a>
+            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                @csrf
+                <button type="submit" class="logout" style="background:none;border:none;padding:0;cursor:pointer;">
+                    <i data-feather="log-out"></i>
+                </button>
+            </form>
         </div>
     </div>
 </aside>
