@@ -82,9 +82,9 @@
             <div class="brands-grid">
                 <!-- Brand Card 1 -->
                 <div class="brand-card">
-                    <div class="brand-header" style="background: linear-gradient(135deg, #D70000, #FF4D4D);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Canon_logo.svg/800px-Canon_logo.svg.png" alt="Canon">
+                    <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <div class="product-image">
+                            <img src="{{ asset('img/canon.jpg') }}" alt="Canon">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -103,8 +103,8 @@
                 <!-- Brand Card 2 -->
                 <div class="brand-card">
                     <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Nikon_logo.svg/800px-Nikon_logo.svg.png" alt="Nikon">
+                        <div class="product-image">
+                            <img src="{{ asset('img/nicon.jpg') }}" alt="Nikon">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -123,8 +123,8 @@
                 <!-- Brand Card 3 -->
                 <div class="brand-card">
                     <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Sony_logo_%28white%29.png/800px-Sony_logo_%28white%29.png" alt="Sony">
+                        <div class="product-image">
+                            <img src="{{ asset('img/Sony.jpg') }}" alt="Sony">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -142,9 +142,9 @@
 
                 <!-- Brand Card 4 -->
                 <div class="brand-card">
-                    <div class="brand-header" style="background: linear-gradient(135deg, #ED1C24, #FF6666);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Fujifilm_logo.svg/800px-Fujifilm_logo.svg.png" alt="Fujifilm">
+                    <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <div class="product-image">
+                            <img src="{{ asset('img/Fujifilm.jpg') }}" alt="Fujifilm">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -162,9 +162,9 @@
 
                 <!-- Brand Card 5 -->
                 <div class="brand-card">
-                    <div class="brand-header" style="background: linear-gradient(135deg, #1A3E72, #4A6FAB);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Olympus_Corporation_logo.svg/800px-Olympus_Corporation_logo.svg.png" alt="Olympus">
+                    <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <div class="product-image">
+                            <img src="{{ asset('img/olympus.jpg') }}" alt="Olympus">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -182,9 +182,9 @@
 
                 <!-- Brand Card 6 -->
                 <div class="brand-card">
-                    <div class="brand-header" style="background: linear-gradient(135deg, #0D4DA1, #4A8CE8);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Panasonic_logo_%28Blue%29.svg/800px-Panasonic_logo_%28Blue%29.svg.png" alt="Panasonic">
+                    <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <div class="product-image">
+                            <img src="{{ asset('img/panasonic.jpg') }}" alt="Panasonic">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -203,8 +203,8 @@
                 <!-- Brand Card 7 -->
                 <div class="brand-card">
                     <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Leica_Camera_logo.svg/800px-Leica_Camera_logo.svg.png" alt="Leica">
+                        <div class="product-image">
+                            <img src="{{ asset('img/leica.jpg') }}" alt="Leica">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -222,9 +222,9 @@
 
                 <!-- Brand Card 8 -->
                 <div class="brand-card">
-                    <div class="brand-header" style="background: linear-gradient(135deg, #FF0000, #FF6666);">
-                        <div class="brand-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/GoPro_logo.svg/800px-GoPro_logo.svg.png" alt="GoPro">
+                    <div class="brand-header" style="background: linear-gradient(135deg, #000000, #333333);">
+                        <div class="product-image">
+                            <img src="{{ asset('img/gopro.jpg') }}" alt="GoPro">
                         </div>
                     </div>
                     <div class="brand-content">
@@ -596,6 +596,19 @@
             font-size: 0.8rem;
             font-weight: 600;
             color: #374151;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px; /* jika ingin sudut membulat */
+        }
+        .product-image {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 8px;
         }
         
         .brand-link {
