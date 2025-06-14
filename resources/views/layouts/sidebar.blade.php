@@ -12,31 +12,31 @@
     <div class="sidebar-menu">
         <ul>
             <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <a href="{{ route('admin.dashboard') }}"><i data-feather="home"></i><span>Dashboard</span></a>
+                <a href="{{ route('admin.dashboard') }}"><i data-feather="home"></i>&nbsp;&nbsp;<span>Dashboard</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.product') ? 'active' : '' }}">
-                <a href="{{ route('admin.product') }}"><i data-feather="shopping-bag"></i><span>Produk</span></a>
+                <a href="{{ route('admin.product') }}"><i data-feather="shopping-bag"></i>&nbsp;&nbsp;<span>Produk</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.category') ? 'active' : '' }}">
-                <a href="{{ route('admin.category') }}"><i data-feather="tag"></i><span>Kategori</span></a>
+                <a href="{{ route('admin.category') }}"><i data-feather="tag"></i>&nbsp;&nbsp;<span>Kategori</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.brand') ? 'active' : '' }}">
-                <a href="{{ route('admin.brand') }}"><i data-feather="award"></i><span>Brand</span></a>
+                <a href="{{ route('admin.brand') }}"><i data-feather="award"></i>&nbsp;&nbsp;<span>Brand</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.sales') ? 'active' : '' }}">
-                <a href="{{ route('admin.sales') }}"><i data-feather="dollar-sign"></i><span>Penjualan</span></a>
+                <a href="{{ route('admin.sales') }}"><i data-feather="dollar-sign"></i>&nbsp;&nbsp;<span>Penjualan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.customer') ? 'active' : '' }}">
-                <a href="{{ route('admin.customer') }}"><i data-feather="users"></i><span>Pelanggan</span></a>
+                <a href="{{ route('admin.customer') }}"><i data-feather="users"></i>&nbsp;&nbsp;<span>Pelanggan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
-                <a href="{{ route('admin.shipping') }}"><i data-feather="truck"></i><span>Pengiriman</span></a>
+                <a href="{{ route('admin.shipping') }}"><i data-feather="truck"></i>&nbsp;&nbsp;<span>Pengiriman</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.review') ? 'active' : '' }}">
-                <a href="{{ route('admin.review') }}"><i data-feather="message-square"></i><span>Ulasan</span></a>
+                <a href="{{ route('admin.review') }}"><i data-feather="message-square"></i>&nbsp;&nbsp;<span>Ulasan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
-                <a href="{{ route('admin.settings') }}"><i data-feather="settings"></i><span>Pengaturan</span></a>
+                <a href="{{ route('admin.settings') }}"><i data-feather="settings"></i>&nbsp;&nbsp;<span>Pengaturan</span></a>
             </li>
         </ul>
     </div>
