@@ -44,9 +44,14 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     })->name('admin.dashboard');
 
     Route::get('/admin/category', [CategoryAdminController::class, 'index'])->name('admin.category');
+
     Route::get('/admin/product', [ProdukAdminController::class, 'index'])->name('admin.product');
     Route::get('/admin/product/create', [ProdukAdminController::class, 'create'])->name('admin.product.create');
     Route::post('/admin/product/store', [ProdukAdminController::class, 'store'])->name('admin.product.store');
+    Route::get('/admin/product/{product}/edit', [ProdukAdminController::class, 'edit'])->name('admin.product.edit');
+    Route::put('/admin/product/{product}', [ProdukAdminController::class, 'update'])->name('admin.product.update');
+    Route::delete('/admin/product/{product}', [ProdukAdminController::class, 'destroy'])->name('admin.product.destroy');
+
     Route::get('/admin/brand', [BrandAdminController::class, 'index'])->name('admin.brand');
     Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
    

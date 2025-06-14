@@ -529,9 +529,9 @@
 }
 </style>
 @endpush
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @section('content')
-<!-- Page Header -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="products-header">
     <h1 class="products-title">Kelola Produk</h1>
     <div class="products-actions">
@@ -594,9 +594,10 @@
 <!-- Products Table -->
 <div class="products-table-card">
     <div class="table-responsive">
-        <table class="products-table">
+            <table class="products-table">
     <thead>
         <tr>
+            <th width="40px"><input type="checkbox" id="selectAll" class="select-checkbox"></th>
             <th>Produk</th>
             <th>Deskripsi</th>
             <th>Kategori</th>
@@ -604,15 +605,16 @@
             <th>Stok</th>
             <th>Status</th>
             <th>Tanggal Dibuat</th>
-            <th>Aksi</th>
+            <th width="120px">Aksi</th>
         </tr>
     </thead>
     <tbody>
         @foreach($products as $product)
         <tr>
-            <!-- Kolom Produk --><th>
-            <input type="checkbox" id="selectAll" class="select-checkbox">
-            </th>
+            <!-- Kolom Checkbox -->
+            <td><input type="checkbox" class="row-checkbox" value="{{ $product->id }}"></td>
+            
+            <!-- Kolom Produk -->
             <td>
                 <div class="product-info">
                     <div class="product-image">
@@ -640,33 +642,41 @@
                 </span>
             </td>
             
-            <!-- Kolom lainnya -->
+            <!-- Kolom Harga -->
             <td class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+            
+            <!-- Kolom Stok -->
             <td>
                 <span class="stock-badge {{ $product->stock > 5 ? 'in-stock' : ($product->stock > 0 ? 'low-stock' : 'out-of-stock') }}">
                     {{ $product->stock }} Unit
                 </span>
             </td>
+            
+            <!-- Kolom Status -->
             <td>
                 <span class="status-badge {{ $product->status }}">
                     {{ ucfirst($product->status) }}
                 </span>
             </td>
+            
             <td>{{ $product->created_at->format('d M Y') }}</td>
+            
             <td>
-                <td>
                     <div class="product-actions">
-                        <button class="action-btn edit" title="Edit">
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="action-btn edit" title="Edit">
                             <i data-feather="edit"></i>
-                        </button>
-                        <button class="action-btn delete" title="Hapus">
-                            <i data-feather="trash-2"></i>
-                        </button>
+                        </a>
+                            <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" class="form-delete" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="action-btn delete btn-delete" title="Hapus" data-id="{{ $product->id }}">
+                                    <i data-feather="trash-2"></i>
+                                </button>
+                            </form>
                         <button class="action-btn view" title="Lihat">
                             <i data-feather="eye"></i>
                         </button>
                     </div>
-                </td>
             </td>
         </tr>
         @endforeach
@@ -686,6 +696,40 @@
 @push('scripts')
 @push('scripts')
 <script>
+document.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const form = this.closest('form');
+        Swal.fire({
+            title: 'Yakin hapus produk ini?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Tampilkan loading SweetAlert
+                Swal.fire({
+                    title: 'Menghapus...',
+                    text: 'Mohon tunggu',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                // Submit form setelah sedikit delay agar loading terlihat
+                setTimeout(() => {
+                    form.submit();
+                }, 600);
+            }
+        });
+    });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Feather icons
     feather.replace();
@@ -792,29 +836,15 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => errorElement.remove(), 3000);
     }
     
-    // Action buttons with modal integration
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const action = this.classList.contains('edit') ? 'edit' : 
-                          this.classList.contains('delete') ? 'delete' : 'view';
-            const row = this.closest('tr');
-            const productId = row.dataset.id; // Assuming each row has data-id attribute
-            const productName = row.querySelector('.product-details h4').textContent;
-            
-            switch(action) {
-                case 'edit':
-                    openEditModal(productId, productName);
-                    break;
-                case 'delete':
-                    openDeleteModal(productId, productName);
-                    break;
-                case 'view':
-                    openViewModal(productId);
-                    break;
-            }
-        });
+
+document.querySelectorAll('.action-btn.view').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const row = this.closest('tr');
+        const productId = row.querySelector('.row-checkbox').value;
+        openViewModal(productId);
     });
+});
     
     // Modal functions
     function openEditModal(id, name) {
@@ -822,17 +852,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // In a real app, this would open a modal with a form
     }
     
-    function openDeleteModal(id, name) {
-        if(confirm(`Apakah Anda yakin ingin menghapus produk "${name}"?`)) {
-            showLoading();
-            // Simulate delete request
-            setTimeout(() => {
-                hideLoading();
-                showSuccess(`Produk "${name}" berhasil dihapus`);
-                // In a real app, you would remove the row or refresh the table
-            }, 1000);
-        }
-    }
+
     
     function openViewModal(id) {
         console.log(`Opening view modal for product ID: ${id}`);
