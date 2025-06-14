@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\CustomerAdminController;
 use App\Http\Controllers\Admin\PenjualanAdminController;
 use App\Http\Controllers\Admin\ProdukAdminController;
+use App\Http\Controllers\Admin\ReviewAdminController;
+use App\Http\Controllers\Admin\SettingAdminController;
+use App\Http\Controllers\Admin\ShippingAdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AboutController;
@@ -47,6 +50,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
    
     Route::get('/admin/penjualan', [PenjualanAdminController::class, 'index'])->name('admin.sales');
     Route::get('/admin/customer', [CustomerAdminController::class, 'index'])->name('admin.customer');
+    Route::get('/admin/shipping', [ShippingAdminController::class, 'index'])->name('admin.shipping');
+    Route::get('/admin/review', [ReviewAdminController::class, 'index'])->name('admin.review');
+    Route::get('/admin/setting', [SettingAdminController::class, 'index'])->name('admin.settings');
 });
 
 require __DIR__.'/auth.php';

@@ -30,13 +30,13 @@
                 <a href="{{ route('admin.customer') }}"><i data-feather="users"></i><span>Pelanggan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
-                <a href="#"><i data-feather="truck"></i><span>Pengiriman</span></a>
+                <a href="{{ route('admin.shipping') }}"><i data-feather="truck"></i><span>Pengiriman</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.review') ? 'active' : '' }}">
-                <a href="#"><i data-feather="message-square"></i><span>Ulasan</span></a>
+                <a href="{{ route('admin.review') }}"><i data-feather="message-square"></i><span>Ulasan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
-                <a href="#"><i data-feather="settings"></i><span>Pengaturan</span></a>
+                <a href="{{ route('admin.settings') }}"><i data-feather="settings"></i><span>Pengaturan</span></a>
             </li>
         </ul>
     </div>

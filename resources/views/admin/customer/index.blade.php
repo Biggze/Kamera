@@ -431,6 +431,90 @@
     height: 16px;
 }
 
+/* Style untuk Chart Period Selector */
+.chart-period-selector {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    background-color: white;
+    font-size: 0.875rem;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    min-width: 120px;
+}
+
+.chart-period-selector:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.chart-period-selector:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Dark Mode Variant */
+.chart-period-selector.dark {
+    background-color: var(--dark);
+    border-color: var(--gray-darker);
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23e2e8f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Small Size */
+.chart-period-selector.sm {
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    min-width: 100px;
+    background-size: 0.75rem;
+    background-position: right 0.5rem center;
+}
+
+/* Large Size */
+.chart-period-selector.lg {
+    padding: 0.625rem 2.25rem 0.625rem 1.25rem;
+    font-size: 1rem;
+    min-width: 140px;
+}
+
+/* Disabled State */
+.chart-period-selector:disabled {
+    background-color: var(--gray-light);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Grouped Selectors */
+.select-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.select-group .chart-period-selector {
+    border-radius: 0;
+    margin-right: -1px;
+}
+
+.select-group .chart-period-selector:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.select-group .chart-period-selector:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-right: 0;
+}
+
 /* Customer Segments */
 .customer-segments {
     display: grid;
