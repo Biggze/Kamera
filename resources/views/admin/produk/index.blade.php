@@ -521,6 +521,12 @@
     background: var(--danger);
     color: white;
 }
+
+.product-description {
+    white-space: pre-line;
+    word-break: break-word;
+    max-width: 250px;
+}
 </style>
 @endpush
 
@@ -539,7 +545,7 @@
                 Filter
             </button>
         </div>
-        <a href="#" class="add-product-btn">
+        <a href="{{ route('admin.product.create') }}" class="add-product-btn">
             <i data-feather="plus"></i>
             Tambah Produk
         </a>
@@ -549,19 +555,19 @@
 <!-- Products Stats -->
 <div class="products-stats">
     <div class="stat-card">
-        <div class="stat-number total">1,248</div>
+        <div class="stat-number total">{{ $totalProducts }}</div>
         <div class="stat-text">Total Produk</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number active">1,124</div>
+        <div class="stat-number active">{{ $activeProducts }}</div>
         <div class="stat-text">Produk Aktif</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number draft">89</div>
+        <div class="stat-number draft">{{ $draftProducts }}</div>
         <div class="stat-text">Draft</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number low-stock">35</div>
+        <div class="stat-number low-stock">{{ $lowStockProducts }}</div>
         <div class="stat-text">Stok Menipis</div>
     </div>
 </div>
@@ -584,289 +590,96 @@
         Hapus
     </button>
 </div>
-
+ 
 <!-- Products Table -->
 <div class="products-table-card">
     <div class="table-responsive">
         <table class="products-table">
-            <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox" id="selectAll" class="select-checkbox">
-                    </th>
-                    <th>Produk</th>
-                    <th>Kategori</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Status</th>
-                    <th>Tanggal Dibuat</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/667eea/ffffff?text=CAM" alt="Canon EOS R6">
-                            </div>
-                            <div class="product-details">
-                                <h4>Canon EOS R6 Mark II Body</h4>
-                                <div class="product-sku">SKU: CAM-R6M2-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">DSLR</span>
-                    </td>
-                    <td class="product-price">Rp 42.999.000</td>
-                    <td>
-                        <span class="stock-badge in-stock">15 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>12 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/48bb78/ffffff?text=SON" alt="Sony A7 IV">
-                            </div>
-                            <div class="product-details">
-                                <h4>Sony A7 IV Body</h4>
-                                <div class="product-sku">SKU: SON-A7IV-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">Mirrorless</span>
-                    </td>
-                    <td class="product-price">Rp 38.500.000</td>
-                    <td>
-                        <span class="stock-badge low-stock">3 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>10 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/ed8936/ffffff?text=GO" alt="GoPro HERO11">
-                            </div>
-                            <div class="product-details">
-                                <h4>GoPro HERO11 Black</h4>
-                                <div class="product-sku">SKU: GOP-H11B-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">Action Cam</span>
-                    </td>
-                    <td class="product-price">Rp 7.999.000</td>
-                    <td>
-                        <span class="stock-badge out-of-stock">0 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge inactive">Nonaktif</span>
-                    </td>
-                    <td>8 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/4299e1/ffffff?text=RF" alt="Canon RF 24-70mm">
-                            </div>
-                            <div class="product-details">
-                                <h4>Canon RF 24-70mm f/2.8L IS USM</h4>
-                                <div class="product-sku">SKU: CAN-RF2470-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">Lensa</span>
-                    </td>
-                    <td class="product-price">Rp 32.750.000</td>
-                    <td>
-                        <span class="stock-badge in-stock">8 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>5 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/764ba2/ffffff?text=NIK" alt="Nikon Z6 II">
-                            </div>
-                            <div class="product-details">
-                                <h4>Nikon Z6 II Body</h4>
-                                <div class="product-sku">SKU: NIK-Z6II-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">Mirrorless</span>
-                    </td>
-                    <td class="product-price">Rp 36.750.000</td>
-                    <td>
-                        <span class="stock-badge in-stock">12 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge draft">Draft</span>
-                    </td>
-                    <td>3 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="product-info">
-                            <div class="product-image">
-                                <img src="https://via.placeholder.com/60x60/f56565/ffffff?text=TRI" alt="Tripod">
-                            </div>
-                            <div class="product-details">
-                                <h4>Manfrotto MT055XPRO3 Tripod</h4>
-                                <div class="product-sku">SKU: MAN-MT055-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="product-category">Aksesoris</span>
-                    </td>
-                    <td class="product-price">Rp 3.250.000</td>
-                    <td>
-                        <span class="stock-badge low-stock">2 Unit</span>
-                    </td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>1 Apr 2024</td>
-                    <td>
-                        <div class="product-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Produk">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Produk">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <thead>
+        <tr>
+            <th>Produk</th>
+            <th>Deskripsi</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Status</th>
+            <th>Tanggal Dibuat</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($products as $product)
+        <tr>
+            <!-- Kolom Produk --><th>
+            <input type="checkbox" id="selectAll" class="select-checkbox">
+            </th>
+            <td>
+                <div class="product-info">
+                    <div class="product-image">
+                        <img src="{{ asset($product->image ? 'storage/'.$product->image : 'https://via.placeholder.com/60') }}" alt="{{ $product->name }}">
+                    </div>
+                    <div class="product-details">
+                        <h4>{{ $product->name }}</h4>
+                        <div class="product-sku">SKU: {{ $product->sku }}</div>
+                    </div>
+                </div>
+            </td>
+            
+            <!-- Kolom Deskripsi -->
+            <td class="product-description">
+                {{ Str::limit($product->description, 100) }}
+                @if(strlen($product->description) > 100)
+                    <span class="read-more" data-description="{{ $product->description }}">... [selengkapnya]</span>
+                @endif
+            </td>
+            
+            <!-- Kolom Kategori -->
+            <td>
+                <span class="product-category {{ str_replace(' ', '-', strtolower($product->category)) }}">
+                    {{ $product->category }}
+                </span>
+            </td>
+            
+            <!-- Kolom lainnya -->
+            <td class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+            <td>
+                <span class="stock-badge {{ $product->stock > 5 ? 'in-stock' : ($product->stock > 0 ? 'low-stock' : 'out-of-stock') }}">
+                    {{ $product->stock }} Unit
+                </span>
+            </td>
+            <td>
+                <span class="status-badge {{ $product->status }}">
+                    {{ ucfirst($product->status) }}
+                </span>
+            </td>
+            <td>{{ $product->created_at->format('d M Y') }}</td>
+            <td>
+                <td>
+                    <div class="product-actions">
+                        <button class="action-btn edit" title="Edit">
+                            <i data-feather="edit"></i>
+                        </button>
+                        <button class="action-btn delete" title="Hapus">
+                            <i data-feather="trash-2"></i>
+                        </button>
+                        <button class="action-btn view" title="Lihat">
+                            <i data-feather="eye"></i>
+                        </button>
+                    </div>
+                </td>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
     </div>
     
     <!-- Pagination -->
     <div class="pagination-wrapper">
-        <div class="pagination-info">
-            Menampilkan 1-10 dari 1,248 produk
-        </div>
-        <div class="pagination">
-            <button class="pagination-btn disabled">
-                <i data-feather="chevron-left"></i>
-            </button>
-            <button class="pagination-btn active">1</button>
-            <button class="pagination-btn">2</button>
-            <button class="pagination-btn">3</button>
-            <button class="pagination-btn">...</button>
-            <button class="pagination-btn">125</button>
-            <button class="pagination-btn">
-                <i data-feather="chevron-right"></i>
-            </button>
-        </div>
+    <div class="pagination-info">
+        Menampilkan {{ $products->firstItem() }}-{{ $products->lastItem() }} dari {{ $products->total() }} produk
     </div>
+</div>
 </div>
 @endsection
 
@@ -1054,22 +867,8 @@ document.addEventListener('DOMContentLoaded', function() {
         openFilterModal();
     });
     
-    function openFilterModal() {
-        console.log('Filter modal would open here');
-        // Implementation for filter modal
-    }
-    
-    // Add product button
-    addProductBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Opening add product form');
-        openAddProductModal();
-    });
-    
-    function openAddProductModal() {
-        console.log('Add product modal would open here');
-        // Implementation for add product modal
-    }
+
+
     
     // Pagination
     document.querySelectorAll('.pagination-btn:not(.disabled)').forEach(btn => {
