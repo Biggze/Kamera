@@ -3,8 +3,9 @@
 @section('title', 'Kelola Pelanggan - Admin')
 
 @push('styles')
+
 <style>
-/* Customers Dashboard */
+
 .customers-header {
     display: flex;
     align-items: center;
@@ -743,7 +744,7 @@
                 Filter
             </button>
         </div>
-        <a href="#" class="add-customer-btn">
+        <a href="{{ route('admin.customer.create') }}" class="add-customer-btn">
             <i data-feather="plus"></i>
             Tambah Pelanggan
         </a>
@@ -758,7 +759,6 @@
             <div class="stat-change positive">+8%</div>
         </div>
         <div class="stat-label">Total Pelanggan</div>
-        <div class="stat-comparison">vs 1,156 bulan lalu</div>
     </div>
     <div class="customer-stat-card active">
         <div class="stat-value">
@@ -766,7 +766,6 @@
             <div class="stat-change positive">+5%</div>
         </div>
         <div class="stat-label">Pelanggan Aktif</div>
-        <div class="stat-comparison">vs 975 bulan lalu</div>
     </div>
     <div class="customer-stat-card inactive">
         <div class="stat-value">
@@ -774,7 +773,6 @@
             <div class="stat-change negative">-3%</div>
         </div>
         <div class="stat-label">Tidak Aktif</div>
-        <div class="stat-comparison">vs 103 bulan lalu</div>
     </div>
 </div>
 
@@ -828,193 +826,55 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="customer-info">
-                            <div class="customer-avatar">
-                                <img src="https://via.placeholder.com/40x40/667eea/ffffff?text=AB" alt="Customer">
-                            </div>
-                            <div class="customer-details">
-                                <div class="customer-name">Andi Budiman</div>
-                                <div class="customer-email">andi.budiman@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="customer-phone">081234567890</td>
-                    <td>
-                        <div class="customer-join-date">15 Jan 2023</div>
-                    </td>
-                    <td>
-                        <span class="customer-status active">Aktif</span>
-                    </td>
-                    <td class="customer-orders">24</td>
-                    <td class="customer-spending">Rp 12.450.000</td>
-                    <td>
-                        <div class="customer-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Pelanggan">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Pelanggan">
+    @foreach($customers as $customer)
+    <tr>
+        <td>
+            <input type="checkbox" class="select-checkbox row-checkbox">
+        </td>
+        <td>
+            <div class="customer-info">
+                <div class="customer-avatar">
+                    @if($customer->avatar)
+                        <img src="{{ asset('storage/' . $customer->avatar) }}" alt="{{ $customer->name }}">
+                    @else
+                        <div class="customer-avatar initials">{{ substr($customer->name, 0, 2) }}</div>
+                    @endif
+                </div>
+                <div class="customer-details">
+                    <div class="customer-name">{{ $customer->name }}</div>
+                    <div class="customer-email">{{ $customer->email }}</div>
+                </div>
+            </div>
+        </td>
+        <td class="customer-phone">{{ $customer->phone }}</td>
+        <td>
+            <div class="customer-join-date">{{ $customer->join_date->format('d M Y') }}</div>
+        </td>
+        <td>
+            <span class="customer-status {{ $customer->status }}">{{ ucfirst($customer->status) }}</span>
+        </td>
+        <td class="customer-orders">{{ $customer->order_count }}</td>
+        <td class="customer-spending">Rp {{ number_format($customer->total_spending, 0, ',', '.') }}</td>
+        <td>
+            <div class="customer-actions">
+                <button class="action-btn view" title="Lihat Detail">
+                    <i data-feather="eye"></i>
+                </button>
+                    <a href="{{ route('admin.customer.edit', $customer->id) }}" class="action-btn edit" title="Edit Pelanggan">
+                        <i data-feather="edit"></i>
+                    </a>
+                   <form action="{{ route('admin.customer.destroy', $customer->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                            <button type="button" class="action-btn delete" title="Hapus Pelanggan" onclick="confirmDelete(this)">
                                 <i data-feather="trash-2"></i>
                             </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="customer-info">
-                            <div class="customer-avatar initials">CD</div>
-                            <div class="customer-details">
-                                <div class="customer-name">Citra Dewi</div>
-                                <div class="customer-email">citra.dewi@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="customer-phone">082345678901</td>
-                    <td>
-                        <div class="customer-join-date">10 Feb 2023</div>
-                    </td>
-                    <td>
-                        <span class="customer-status active">Aktif</span>
-                    </td>
-                    <td class="customer-orders">18</td>
-                    <td class="customer-spending">Rp 8.750.000</td>
-                    <td>
-                        <div class="customer-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Pelanggan">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Pelanggan">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="customer-info">
-                            <div class="customer-avatar">
-                                <img src="https://via.placeholder.com/40x40/48bb78/ffffff?text=EF" alt="Customer">
-                            </div>
-                            <div class="customer-details">
-                                <div class="customer-name">Eko Fajar</div>
-                                <div class="customer-email">eko.fajar@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="customer-phone">083456789012</td>
-                    <td>
-                        <div class="customer-join-date">5 Mar 2023</div>
-                    </td>
-                    <td>
-                        <span class="customer-status active">Aktif</span>
-                    </td>
-                    <td class="customer-orders">12</td>
-                    <td class="customer-spending">Rp 6.200.000</td>
-                    <td>
-                        <div class="customer-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Pelanggan">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Pelanggan">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="customer-info">
-                            <div class="customer-avatar initials">GH</div>
-                            <div class="customer-details">
-                                <div class="customer-name">Gita Hartono</div>
-                                <div class="customer-email">gita.hartono@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="customer-phone">084567890123</td>
-                    <td>
-                        <div class="customer-join-date">20 Apr 2023</div>
-                    </td>
-                    <td>
-                        <span class="customer-status new">Baru</span>
-                    </td>
-                    <td class="customer-orders">3</td>
-                    <td class="customer-spending">Rp 1.850.000</td>
-                    <td>
-                        <div class="customer-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Pelanggan">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Pelanggan">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="customer-info">
-                            <div class="customer-avatar">
-                                <img src="https://via.placeholder.com/40x40/ed8936/ffffff?text=IJ" alt="Customer">
-                            </div>
-                            <div class="customer-details">
-                                <div class="customer-name">Indra Jaya</div>
-                                <div class="customer-email">indra.jaya@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="customer-phone">085678901234</td>
-                    <td>
-                        <div class="customer-join-date">15 Mei 2023</div>
-                    </td>
-                    <td>
-                        <span class="customer-status inactive">Tidak Aktif</span>
-                    </td>
-                    <td class="customer-orders">8</td>
-                    <td class="customer-spending">Rp 4.500.000</td>
-                    <td>
-                        <div class="customer-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Pelanggan">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Pelanggan">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+                    </form>
+            </div>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
         </table>
     </div>
     
@@ -1041,7 +901,24 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function confirmDelete(button) {
+    Swal.fire({
+        title: 'Hapus Pelanggan?',
+        text: "Anda tidak akan bisa mengembalikan data ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            button.closest('form').submit();
+        }
+    });
+}
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Feather icons
     feather.replace();
@@ -1162,17 +1039,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Implementation would show filter options
     }
 
-    // Add customer button
-    addCustomerBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Opening add customer form');
-        openAddCustomerModal();
-    });
-
-    function openAddCustomerModal() {
-        console.log('Add customer modal would open here');
-        // Implementation would show add customer form
-    }
 
     // View all segment links
     viewAllLinks.forEach(link => {
@@ -1184,50 +1050,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Action buttons for customers
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const action = this.classList.contains('edit') ? 'edit' : 
-                          this.classList.contains('delete') ? 'delete' : 'view';
-            const row = this.closest('tr');
-            const customerId = row.dataset.id;
-            const customerName = row.querySelector('.customer-name').textContent;
-            
-            switch(action) {
-                case 'edit':
-                    openEditCustomerModal(customerId, customerName);
-                    break;
-                case 'delete':
-                    openDeleteCustomerModal(customerId, customerName);
-                    break;
-                case 'view':
-                    openViewCustomerModal(customerId);
-                    break;
-            }
-        });
-    });
-
-    // Modal functions for customers
     function openEditCustomerModal(id, name) {
         console.log(`Opening edit modal for customer: ${name} (ID: ${id})`);
         // Implementation would open a modal with customer edit form
     }
 
-    function openDeleteCustomerModal(id, name) {
-        if(confirm(`Apakah Anda yakin ingin menghapus pelanggan "${name}"?`)) {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                showSuccess(`Pelanggan "${name}" berhasil dihapus`);
-            }, 1000);
-        }
-    }
 
-    function openViewCustomerModal(id) {
-        console.log(`Opening view modal for customer ID: ${id}`);
-        // Implementation would open a modal with customer details
-    }
+
+
 
     // Loading states
     function showLoading() {

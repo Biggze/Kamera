@@ -26,8 +26,8 @@
             <li class="{{ request()->routeIs('admin.sales') ? 'active' : '' }}">
                 <a href="{{ route('admin.sales') }}"><i data-feather="dollar-sign"></i>&nbsp;&nbsp;<span>Penjualan</span></a>
             </li>
-            <li class="{{ request()->routeIs('admin.customer') ? 'active' : '' }}">
-                <a href="{{ route('admin.customer') }}"><i data-feather="users"></i>&nbsp;&nbsp;<span>Pelanggan</span></a>
+            <li class="{{ request()->routeIs('admin.customer.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.customer.index') }}"><i data-feather="users"></i>&nbsp;&nbsp;<span>Pelanggan</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
                 <a href="{{ route('admin.shipping') }}"><i data-feather="truck"></i>&nbsp;&nbsp;<span>Pengiriman</span></a>

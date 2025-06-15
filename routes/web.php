@@ -56,7 +56,15 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
    
     Route::get('/admin/penjualan', [PenjualanAdminController::class, 'index'])->name('admin.sales');
-    Route::get('/admin/customer', [CustomerAdminController::class, 'index'])->name('admin.customer');
+
+    Route::get('/admin/customer', [CustomerAdminController::class, 'index'])->name('admin.customer.index');
+    Route::get('/admin/customer/create', [CustomerAdminController::class, 'create'])->name('admin.customer.create');
+    Route::post('/admin/customer', [CustomerAdminController::class, 'store'])->name('admin.customer.store');
+    Route::delete('/admin/customer/{customer}', [CustomerAdminController::class, 'destroy'])->name('admin.customer.destroy');
+    Route::put('/admin/customer/{customer}', [CustomerAdminController::class, 'update'])->name('admin.customer.update');
+    Route::get('/admin/customer/{customer}/edit', [CustomerAdminController::class, 'edit'])->name('admin.customer.edit');
+
+
     Route::get('/admin/shipping', [ShippingAdminController::class, 'index'])->name('admin.shipping');
     Route::get('/admin/review', [ReviewAdminController::class, 'index'])->name('admin.review');
     Route::get('/admin/setting', [SettingAdminController::class, 'index'])->name('admin.settings');
