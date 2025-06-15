@@ -781,11 +781,11 @@
     <div class="table-header">
         <h3 class="table-title">Daftar Pelanggan</h3>
         <div class="table-actions">
-            <select class="chart-period-selector">
-                <option>Semua</option>
-                <option>Aktif</option>
-                <option>Baru</option>
-                <option>Tidak Aktif</option>
+           <select class="chart-period-selector">
+            <option value="semua">Semua</option>
+            <option value="active">Aktif</option>
+            <option value="new">Baru</option>
+            <option value="inactive">Tidak Aktif</option>
             </select>
         </div>
     </div>
@@ -827,7 +827,7 @@
             </thead>
             <tbody>
     @foreach($customers as $customer)
-    <tr>
+    <tr data-status="{{ strtolower($customer->status) }}">
         <td>
             <input type="checkbox" class="select-checkbox row-checkbox">
         </td>
@@ -996,11 +996,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Filter by status
-    statusFilter.addEventListener('change', function() {
-        const status = this.value.toLowerCase();
-        console.log('Filtering customers by status:', status);
-        // In a real app, this would filter the customers table
+   statusFilter.addEventListener('change', function() {
+    const selected = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.customers-table tbody tr');
+    rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status');
+        if (selected === 'semua' || selected === '') {
+            row.style.display = '';
+        } else if (rowStatus === selected) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
     });
+});
 
     // Simulated API call for customers
     async function fetchCustomers(query = '', filters = {}) {
