@@ -755,21 +755,21 @@
 <div class="customers-stats">
     <div class="customer-stat-card total">
         <div class="stat-value">
-            <div class="stat-number">1,248</div>
+            <div class="stat-number">{{ number_format($totalCustomers) }}</div>
             <div class="stat-change positive">+8%</div>
         </div>
         <div class="stat-label">Total Pelanggan</div>
     </div>
     <div class="customer-stat-card active">
         <div class="stat-value">
-            <div class="stat-number">1,024</div>
+            <div class="stat-number">{{ number_format($activeCustomers) }}</div>
             <div class="stat-change positive">+5%</div>
         </div>
         <div class="stat-label">Pelanggan Aktif</div>
     </div>
     <div class="customer-stat-card inactive">
         <div class="stat-value">
-            <div class="stat-number">100</div>
+            <div class="stat-number">{{ number_format($inactiveCustomers) }}</div>
             <div class="stat-change negative">-3%</div>
         </div>
         <div class="stat-label">Tidak Aktif</div>
@@ -880,23 +880,13 @@
     
     <!-- Pagination -->
     <div class="pagination-wrapper">
-        <div class="pagination-info">
-            Menampilkan 1-5 dari 1,248 pelanggan
-        </div>
-        <div class="pagination">
-            <button class="pagination-btn disabled">
-                <i data-feather="chevron-left"></i>
-            </button>
-            <button class="pagination-btn active">1</button>
-            <button class="pagination-btn">2</button>
-            <button class="pagination-btn">3</button>
-            <button class="pagination-btn">...</button>
-            <button class="pagination-btn">250</button>
-            <button class="pagination-btn">
-                <i data-feather="chevron-right"></i>
-            </button>
-        </div>
+    <div class="pagination-info">
+        Menampilkan {{ $customers->firstItem() }}-{{ $customers->lastItem() }} dari {{ $customers->total() }} pelanggan
     </div>
+    <div class="pagination">
+        {{ $customers->links('vendor.pagination.bootstrap-4') }}
+    </div>
+</div>
 </div>
 @endsection
 
@@ -1087,18 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.appendChild(successElement);
         setTimeout(() => successElement.remove(), 3000);
-    }
-
-    // Pagination
-    document.querySelectorAll('.pagination-btn:not(.disabled)').forEach(btn => {
-        btn.addEventListener('click', function() {
-            if(!this.classList.contains('active')) {
-                const page = this.textContent.trim();
-                console.log('Navigating to page:', page);
-                loadCustomerPage(page);
-            }
-        });
-    });
+    }   
 
     function loadCustomerPage(page) {
         showLoading();

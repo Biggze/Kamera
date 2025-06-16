@@ -84,6 +84,35 @@
     .btn-submit:hover {
         background: var(--primary-dark);
     }
+    /* ...existing code... */
+.customer-back-action {
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.add-customer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gray);
+    color: var(--dark);
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-xs);
+}
+
+.add-customer-btn:hover {
+    background: var(--gray-dark);
+    color: var(--primary);
+    text-decoration: none;
+}
+/* ...existing code... */
 </style>
 @endpush
 

@@ -130,6 +130,34 @@
         text-align: right;
         margin-top: 0.25rem;
     }
+
+    .product-back-action {
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.add-product-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gray);
+    color: var(--dark);
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-xs);
+}
+
+.add-product-btn:hover {
+    background: var(--gray-dark);
+    color: var(--primary);
+    text-decoration: none;
+}
     
     /* Category-specific colors */
     .category-dslr { background: rgba(102, 126, 234, 0.1); color: #667eea; }
@@ -144,7 +172,7 @@
 @section('content')
 <div class="products-header">
     <h1 class="products-title">Tambah Produk Kamera</h1>
-    <div class="products-actions">
+    <div class="product-back-action">
         <a href="{{ route('admin.product') }}" class="add-product-btn" style="background: var(--gray);">
             <i data-feather="arrow-left"></i>
             Kembali ke Daftar Produk

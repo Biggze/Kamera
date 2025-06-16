@@ -261,7 +261,6 @@
                 <select id="status" name="status" class="form-control form-select" required>
                     <option value="active" {{ old('status', $customer->status) == 'active' ? 'selected' : '' }}>Aktif</option>
                     <option value="inactive" {{ old('status', $customer->status) == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
-                    <option value="new" {{ old('status', $customer->status) == 'new' ? 'selected' : '' }}>Baru</option>
                 </select>
             </div>
             

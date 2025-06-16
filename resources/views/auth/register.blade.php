@@ -52,6 +52,24 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label class="form-label" for="phone">Nomor HP</label>
+                <div class="input-icon">
+                    <i data-feather="phone"></i>
+                    <input id="phone"
+                        class="form-input @error('phone') error @enderror"
+                        type="text"
+                        name="phone"
+                        value="{{ old('phone') }}"
+                        required
+                        autocomplete="tel"
+                        placeholder="Masukkan nomor HP">
+                </div>
+                @error('phone')
+                    <div class="error-message" style="display: block;">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- Password -->
             <div class="form-group">
                 <label class="form-label" for="password">Password</label>

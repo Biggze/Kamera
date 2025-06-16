@@ -530,6 +530,47 @@
                 display: none;
             }
         }
+
+        /* Custom Pagination Style */
+.pagination {
+    justify-content: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.pagination .page-item {
+    margin: 0 2px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    background: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 500;
+}
+
+.pagination .page-link:hover {
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #aaa;
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
     </style>
 </head>
 <body>
