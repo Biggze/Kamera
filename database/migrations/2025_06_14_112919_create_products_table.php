@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->text('description')->nullable();
             $table->decimal('price', 12, 2);
-            $table->decimal('discount_price', 12, 2)->nullable();
             $table->integer('stock')->default(0);
             $table->string('category');
             $table->string('image')->nullable();

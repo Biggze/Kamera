@@ -287,13 +287,38 @@
             <i data-feather="camera"></i>
             CameraHub
         </div>
-        <ul class="nav-links">
-            <li><a href="{{ route('dashboard') }}">Beranda</a></li>
-            <li><a href="{{route('user.category') }}">Kategori</a></li>
-            <li><a href="{{ route('user.brand') }}">Brand</a></li>
-            <li><a href="{{ route('user.about') }}">Tentang</a></li>
-            <li><a href="{{ route('user.contact') }}">Kontak</a></li>
-        </ul>
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ route('dashboard') }}"
+                    class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        Beranda
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.category') }}"
+                    class="{{ request()->routeIs('user.category') ? 'active' : '' }}">
+                        Kategori
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.brand') }}"
+                    class="{{ request()->routeIs('user.brand') ? 'active' : '' }}">
+                        Brand
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.about') }}"
+                    class="{{ request()->routeIs('user.about') ? 'active' : '' }}">
+                        Tentang
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.contact') }}"
+                    class="{{ request()->routeIs('user.contact') ? 'active' : '' }}">
+                        Kontak
+                    </a>
+                </li>
+            </ul>
         @auth
             <div class="user-dropdown">
                 <button class="user-btn" onclick="toggleDropdown()" type="button">

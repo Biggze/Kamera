@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/user/category', [CategoryController::class, 'index'])->name('user.category');
     Route::get('/user/brand', [BrandController::class, 'index'])->name('user.brand');
+    Route::get('/user/brand/detail', [BrandController::class, 'show'])->name('user.brand.detail');
     Route::get('/user/about', [AboutController::class, 'index'])->name('user.about');
     Route::get('/user/contact', [ContactController::class, 'index'])->name('user.contact');
 
@@ -43,7 +44,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         return view('admin.dashboard.index');
     })->name('admin.dashboard');
 
-    Route::get('/admin/category', [CategoryAdminController::class, 'index'])->name('admin.category');
+    Route::get('/admin/category', [CategoryAdminController::class, 'index'])->name('admin.category.index');
+    Route::get('/admin/category/create', [CategoryAdminController::class, 'create'])->name('admin.category.create');
+    Route::post('/admin/category/store', [CategoryAdminController::class, 'store'])->name('admin.category.store');
+    Route::delete('/admin/category/{id}', [CategoryAdminController::class, 'destroy'])->name('admin.category.destroy');
 
     Route::get('/admin/product', [ProdukAdminController::class, 'index'])->name('admin.product');
     Route::get('/admin/product/create', [ProdukAdminController::class, 'create'])->name('admin.product.create');

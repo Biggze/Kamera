@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-        protected $fillable = [
+          protected $fillable = [
         'name',
         'slug',
         'icon',
-        'is_active'
+        'is_active',
+        'description',
+        'parent_id',
+        'color',
+        'display_order'
     ];
 
     protected $casts = [
@@ -20,6 +24,6 @@ class Category extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 }

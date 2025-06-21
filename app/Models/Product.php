@@ -16,17 +16,14 @@ class Product extends Model
         'sku',
         'description',
         'price',
-        'discount_price',
         'stock',
-        'category',
+        'category_id',
         'image',
-        'gallery',
         'status',
         'featured'
     ];
 
     protected $casts = [
-        'gallery' => 'array',
         'featured' => 'boolean'
     ];
 

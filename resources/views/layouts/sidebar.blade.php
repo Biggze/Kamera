@@ -17,8 +17,8 @@
             <li class="{{ request()->routeIs('admin.product') ? 'active' : '' }}">
                 <a href="{{ route('admin.product') }}"><i data-feather="shopping-bag"></i>&nbsp;&nbsp;<span>Produk</span></a>
             </li>
-            <li class="{{ request()->routeIs('admin.category') ? 'active' : '' }}">
-                <a href="{{ route('admin.category') }}"><i data-feather="tag"></i>&nbsp;&nbsp;<span>Kategori</span></a>
+            <li class="{{ request()->routeIs('admin.category.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.category.index') }}"><i data-feather="tag"></i>&nbsp;&nbsp;<span>Kategori</span></a>
             </li>
             <li class="{{ request()->routeIs('admin.brand') ? 'active' : '' }}">
                 <a href="{{ route('admin.brand') }}"><i data-feather="award"></i>&nbsp;&nbsp;<span>Brand</span></a>

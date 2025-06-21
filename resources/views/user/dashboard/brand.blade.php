@@ -112,7 +112,7 @@
                         <p class="brand-description">Inovator dalam teknologi optik dengan sensor beresolusi tinggi.</p>
                         <div class="brand-stats">
                             <span class="product-count">980+ Produk</span>
-                            <a href="#" class="brand-link">
+                            <a href="{{ route('user.brand.detail') }}" class="brand-link">
                                 Lihat Produk
                                 <i data-feather="arrow-right"></i>
                             </a>

@@ -12,5 +12,11 @@ class BrandController extends Controller
         return view('user.dashboard.brand');
     }
 
+
+    public function show()
+    {
+        return view('user.brand.detail');
+    }
+
   
 }

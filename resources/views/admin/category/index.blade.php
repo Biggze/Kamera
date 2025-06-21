@@ -559,7 +559,7 @@
                 Filter
             </button>
         </div>
-        <a href="#" class="add-category-btn">
+        <a href="{{ route('admin.category.create') }}" class="add-category-btn">
             <i data-feather="plus"></i>
             Tambah Kategori
         </a>
@@ -615,279 +615,57 @@
                         <input type="checkbox" id="selectAll" class="select-checkbox">
                     </th>
                     <th>Kategori</th>
-                    <th>Hierarki</th>
                     <th>Jumlah Produk</th>
                     <th>Status</th>
                     <th>Tanggal Dibuat</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon dslr">
-                                <i data-feather="camera"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>DSLR Camera</h4>
-                                <div class="category-slug">dslr-camera</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Kamera</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>DSLR</span>
-                        </div>
-                    </td>
-                    <td class="product-count">245 Produk</td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>15 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon mirrorless">
-                                <i data-feather="camera"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>Mirrorless Camera</h4>
-                                <div class="category-slug">mirrorless-camera</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Kamera</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>Mirrorless</span>
-                        </div>
-                    </td>
-                    <td class="product-count">189 Produk</td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>15 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon action-cam">
-                                <i data-feather="video"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>Action Camera</h4>
-                                <div class="category-slug">action-camera</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Kamera</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>Action Cam</span>
-                        </div>
-                    </td>
-                    <td class="product-count">67 Produk</td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>12 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon lensa">
-                                <i data-feather="circle"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>Lensa Kamera</h4>
-                                <div class="category-slug">lensa-kamera</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Aksesoris</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>Lensa</span>
-                        </div>
-                    </td>
-                    <td class="product-count">324 Produk</td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>10 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon tripod">
-                                <i data-feather="maximize"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>Tripod & Stabilizer</h4>
-                                <div class="category-slug">tripod-stabilizer</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Aksesoris</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>Support</span>
-                        </div>
-                    </td>
-                    <td class="product-count">89 Produk</td>
-                    <td>
-                        <span class="status-badge active">Aktif</span>
-                    </td>
-                    <td>8 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="category-info">
-                            <div class="category-icon aksesoris">
-                                <i data-feather="box"></i>
-                            </div>
-                            <div class="category-details">
-                                <h4>Tas & Case</h4>
-                                <div class="category-slug">tas-case</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="category-hierarchy">
-                            <span>Aksesoris</span>
-                            <span class="hierarchy-separator">→</span>
-                            <span>Penyimpanan</span>
-                        </div>
-                    </td>
-                    <td class="product-count empty">0 Produk</td>
-                    <td>
-                        <span class="status-badge inactive">Nonaktif</span>
-                    </td>
-                    <td>5 Mar 2024</td>
-                    <td>
-                        <div class="category-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn add-subcategory" title="Tambah Sub Kategori">
-                                <i data-feather="plus-circle"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Kategori">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Kategori">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+<tbody>
+    @forelse($categories as $category)
+    <tr>
+        <td>
+            <input type="checkbox" class="select-checkbox row-checkbox">
+        </td>
+        <td>
+            <!-- <div class="category-info">
+                <div class="category-icon {{ $category->slug }}">
+                    <i data-feather="{{ $category->icon ?? 'tag' }}"></i>
+                </div> -->
+                <div class="category-details">
+                    <h4>{{ $category->name }}</h4>
+                    <div class="category-slug">{{ $category->slug }}</div>
+                </div>
+            </div>
+        </td>
+
+        <td class="product-count">
+            {{ $category->products->count() }} Produk
+        </td>
+        <td>
+            <span class="status-badge {{ $category->is_active ? 'active' : 'inactive' }}">
+                {{ $category->is_active ? 'Aktif' : 'Nonaktif' }}
+            </span>
+        </td>
+        <td>{{ $category->created_at->format('d M Y') }}</td>
+        <td>
+            <div class="category-actions">
+                  <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="action-btn delete" onclick="return confirm('Yakin ingin menghapus kategori ini?')">
+                    <i data-feather="trash-2"></i> Hapus
+                </button>
+            </form>
+            </div>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="7" style="text-align:center;">Belum ada kategori.</td>
+    </tr>
+    @endforelse
+</tbody>
         </table>
     </div>
     
@@ -1013,49 +791,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => errorElement.remove(), 3000);
     }
 
-    // Action buttons for categories
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const action = this.classList.contains('edit') ? 'edit' : 
-                          this.classList.contains('delete') ? 'delete' : 
-                          this.classList.contains('view') ? 'view' : 'add-subcategory';
-            const row = this.closest('tr');
-            const categoryId = row.dataset.id;
-            const categoryName = row.querySelector('.category-details h4').textContent;
-            
-            switch(action) {
-                case 'edit':
-                    openEditCategoryModal(categoryId, categoryName);
-                    break;
-                case 'delete':
-                    openDeleteCategoryModal(categoryId, categoryName);
-                    break;
-                case 'view':
-                    openViewCategoryModal(categoryId);
-                    break;
-                case 'add-subcategory':
-                    openAddSubcategoryModal(categoryId, categoryName);
-                    break;
-            }
-        });
-    });
-
-    // Modal functions for categories
-    function openEditCategoryModal(id, name) {
-        console.log(`Opening edit modal for category: ${name} (ID: ${id})`);
-    }
-
-    function openDeleteCategoryModal(id, name) {
-        if(confirm(`Apakah Anda yakin ingin menghapus kategori "${name}" dan semua sub-kategorinya?`)) {
-            showLoading();
-            setTimeout(() => {
-                hideLoading();
-                showSuccess(`Kategori "${name}" berhasil dihapus`);
-            }, 1000);
-        }
-    }
-
     function openViewCategoryModal(id) {
         console.log(`Opening view modal for category ID: ${id}`);
     }
@@ -1107,15 +842,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add category button
-    addCategoryBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Opening add category form');
-        openAddCategoryModal();
-    });
+    // addCategoryBtn.addEventListener('click', function(e) {
+    //     e.preventDefault();
+    //     console.log('Opening add category form');
+    //     openAddCategoryModal();
+    // });
 
-    function openAddCategoryModal() {
-        console.log('Add category modal would open here');
-    }
+    // function openAddCategoryModal() {
+    //     console.log('Add category modal would open here');
+    // }
 
     // Pagination
     document.querySelectorAll('.pagination-btn:not(.disabled)').forEach(btn => {

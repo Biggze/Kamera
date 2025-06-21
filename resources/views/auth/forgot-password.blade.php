@@ -1,25 +1,56 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.guest')
+
+@section('title', 'Lupa Password - CameraHub')
+
+@section('content')
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="logo">
+            <h1><i data-feather="lock"></i> Lupa Password</h1>
+            <p>Masukkan email Anda untuk reset password</p>
+        </div>
+
+        <div class="mb-4 text-sm text-gray-600">
+            {{ __('Lupa password? Masukkan email Anda dan kami akan mengirimkan link untuk reset password.') }}
+        </div>
+
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <form method="POST" action="{{ route('password.email') }}" class="auth-form">
+            @csrf
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label class="form-label" for="email">{{ __('Email') }}</label>
+                <div class="input-icon">
+                    <i data-feather="mail"></i>
+                    <input id="email" 
+                           class="form-control"
+                           type="email" 
+                           name="email" 
+                           value="{{ old('email') }}" 
+                           required 
+                           autofocus 
+                           placeholder="Masukkan email Anda" />
+                </div>
+                @error('email')
+                    <div class="error-message" style="display: block;">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-actions" style="margin-top: 1.5rem;">
+                <button type="submit" class="btn-primary w-full">
+                    {{ __('Kirim Link Reset Password') }}
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-footer" style="margin-top: 1.5rem;">
+            <a href="{{ route('login') }}" class="btn btn-link">
+                <i data-feather="arrow-left"></i> Kembali ke Login
+            </a>
+        </div>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</div>
+@endsection
