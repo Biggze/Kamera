@@ -57,6 +57,12 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::delete('/admin/product/{product}', [ProdukAdminController::class, 'destroy'])->name('admin.product.destroy');
 
     Route::get('/admin/brand', [BrandAdminController::class, 'index'])->name('admin.brand');
+    Route::post('/admin/brand/store', [BrandAdminController::class, 'store'])->name('admin.brand.store');
+    Route::get('/admin/brand/create', [BrandAdminController::class, 'create'])->name('admin.brand.create');
+    Route::get('/admin/brand/{id}/edit', [BrandAdminController::class, 'edit'])->name('admin.brand.edit');
+    Route::put('/admin/brand/{id}', [BrandAdminController::class, 'update'])->name('admin.brand.update');
+    Route::delete('/admin/brand/{id}', [BrandAdminController::class, 'destroy'])->name('admin.brand.destroy');
+
     Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
    
     Route::get('/admin/penjualan', [PenjualanAdminController::class, 'index'])->name('admin.sales');

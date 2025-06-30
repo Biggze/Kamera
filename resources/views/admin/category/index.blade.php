@@ -3,6 +3,7 @@
 @section('title', 'Kelola Kategori - Admin')
 
 @push('styles')
+
 <style>
 /* Categories Grid */
 .categories-header {
@@ -628,10 +629,10 @@
             <input type="checkbox" class="select-checkbox row-checkbox">
         </td>
         <td>
-            <!-- <div class="category-info">
+            <div class="category-info">
                 <div class="category-icon {{ $category->slug }}">
                     <i data-feather="{{ $category->icon ?? 'tag' }}"></i>
-                </div> -->
+                </div>
                 <div class="category-details">
                     <h4>{{ $category->name }}</h4>
                     <div class="category-slug">{{ $category->slug }}</div>
@@ -653,7 +654,7 @@
                   <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="action-btn delete" onclick="return confirm('Yakin ingin menghapus kategori ini?')">
+                <button type="submit" class="bulk-btn danger" onclick="return confirm('Yakin ingin menghapus kategori ini?')">
                     <i data-feather="trash-2"></i> Hapus
                 </button>
             </form>
@@ -668,7 +669,6 @@
 </tbody>
         </table>
     </div>
-    
     <!-- Pagination -->
     <div class="pagination-wrapper">
         <div class="pagination-info">
@@ -689,7 +689,10 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/feather-icons"></script>
+
 <script>
+    
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Feather icons
     feather.replace();
@@ -882,6 +885,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the table
     fetchCategories();
+
+
+    const bulkDeleteBtn = document.querySelector('.bulk-btn.danger');
+
+// Event listener untuk bulk delete
+bulkDeleteBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+    if (checkedBoxes.length === 0) return;
+
+    if (confirm(`Yakin ingin menghapus ${checkedBoxes.length} kategori terpilih?`)) {
+        // Ambil ID kategori yang dicentang
+        const ids = Array.from(checkedBoxes).map(cb => 
+            cb.closest('tr').querySelector('form').action.split('/').pop()
+        );
+        // Kirim request ke backend (AJAX atau form submit massal)
+        // Contoh simulasi:
+        console.log('Menghapus kategori dengan ID:', ids);
+        showSuccess('Kategori terpilih berhasil dihapus (simulasi)');
+        // Uncheck semua setelah aksi
+        checkedBoxes.forEach(cb => cb.checked = false);
+        updateBulkActions();
+    }
+});
+
 });
 </script>
 @endpush

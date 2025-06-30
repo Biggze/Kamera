@@ -654,7 +654,7 @@
                 Filter
             </button>
         </div>
-        <a href="#" class="add-brand-btn">
+        <a href="{{ route('admin.brand.create') }}" class="add-brand-btn">
             <i data-feather="plus"></i>
             Tambah Brand
         </a>
@@ -664,20 +664,16 @@
 <!-- Brands Stats -->
 <div class="brands-stats">
     <div class="stat-card">
-        <div class="stat-number total">24</div>
+        <div class="stat-number total">{{ $brands->count() }}</div>
         <div class="stat-text">Total Brand</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number active">20</div>
+        <div class="stat-number active">{{ $brands->where('status', 'active')->count() }}</div>
         <div class="stat-text">Brand Aktif</div>
     </div>
     <div class="stat-card">
-        <div class="stat-number featured">8</div>
+        <div class="stat-number featured">{{ $brands->where('status', 'featured')->count() }}</div>
         <div class="stat-text">Brand Unggulan</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-number products">1,248</div>
-        <div class="stat-text">Total Produk</div>
     </div>
 </div>
 
@@ -702,419 +698,50 @@
 
 <!-- Brands Grid View -->
 <div class="brands-grid active" id="brandsGrid">
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/667eea?text=CANON" alt="Canon">
-            </div>
-        </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">Canon</h3>
-            <p class="brand-description">Perusahaan multinasional Jepang yang mengkhususkan diri dalam produk pencitraan dan optik.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>342 Produk</span>
+    @forelse($brands as $brand)
+        <div class="brand-card">
+            <div class="brand-card-header">
+                <div class="brand-logo">
+                   @if($brand->logo_path)
+                        <img src="{{ asset('storage/'.$brand->logo_path) }}" alt="{{ $brand->name }}">
+                    @else
+                        <span>{{ strtoupper(substr($brand->name,0,2)) }}</span>
+                    @endif
                 </div>
-                <span class="brand-status featured">Unggulan</span>
             </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/48bb78?text=SONY" alt="Sony">
-            </div>
-        </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">Sony</h3>
-            <p class="brand-description">Konglomerat multinasional Jepang yang bergerak di bidang elektronik konsumen dan peralatan profesional.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>289 Produk</span>
+            <div class="brand-card-body">
+                <h3 class="brand-name">{{ $brand->name }}</h3>
+                <p class="brand-description">{{ $brand->description }}</p>
+                <div class="brand-meta">
+                    <div class="brand-products-count">
+                        <i data-feather="package"></i>
+                        <span>- Produk</span>
+                    </div>
+                    <span class="brand-status {{ $brand->status }}">{{ ucfirst($brand->status) }}</span>
                 </div>
-                <span class="brand-status featured">Unggulan</span>
-            </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/ed8936?text=NIKON" alt="Nikon">
-            </div>
-        </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">Nikon</h3>
-            <p class="brand-description">Perusahaan multinasional Jepang yang mengkhususkan diri dalam optics dan imaging products.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>198 Produk</span>
+                <div class="brand-actions">
+                    <button class="action-btn view" title="Lihat Detail">
+                        <i data-feather="eye"></i>
+                    </button>
+                    <a href="{{ route('admin.brand.edit', $brand->id) }}" class="action-btn edit" title="Edit Brand">
+                        <i data-feather="edit"></i>
+                    </a>
+                   <form action="{{ route('admin.brand.destroy', $brand->id) }}" method="POST" class="form-delete-brand" data-nama="{{ $brand->name }}" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="action-btn delete" title="Hapus Brand">
+                            <i data-feather="trash-2"></i>
+                        </button>
+                    </form>
                 </div>
-                <span class="brand-status active">Aktif</span>
-            </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
             </div>
         </div>
-    </div>
-
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/4299e1?text=FUJI" alt="Fujifilm">
-            </div>
+    @empty
+        <div class="col-12">
+            <div class="alert alert-info">Belum ada brand.</div>
         </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">Fujifilm</h3>
-            <p class="brand-description">Perusahaan multinasional Jepang yang bergerak di bidang fotografi, pencitraan, dan dokumen bisnis.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>156 Produk</span>
-                </div>
-                <span class="brand-status active">Aktif</span>
-            </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/764ba2?text=PANA" alt="Panasonic">
-            </div>
-        </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">Panasonic</h3>
-            <p class="brand-description">Perusahaan elektronik multinasional Jepang yang memproduksi berbagai produk elektronik konsumen.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>89 Produk</span>
-                </div>
-                <span class="brand-status active">Aktif</span>
-            </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="brand-card">
-        <div class="brand-card-header">
-            <div class="brand-logo">
-                <img src="https://via.placeholder.com/60x60/ffffff/f56565?text=GO" alt="GoPro">
-            </div>
-        </div>
-        <div class="brand-card-body">
-            <h3 class="brand-name">GoPro</h3>
-            <p class="brand-description">Perusahaan teknologi Amerika yang mengembangkan kamera aksi dan aksesori terkait.</p>
-            <div class="brand-meta">
-                <div class="brand-products-count">
-                    <i data-feather="package"></i>
-                    <span>42 Produk</span>
-                </div>
-                <span class="brand-status active">Aktif</span>
-            </div>
-            <div class="brand-actions">
-                <button class="action-btn view" title="Lihat Detail">
-                    <i data-feather="eye"></i>
-                </button>
-                <button class="action-btn edit" title="Edit Brand">
-                    <i data-feather="edit"></i>
-                </button>
-                <button class="action-btn delete" title="Hapus Brand">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
+    @endforelse
 </div>
-
-<!-- Brands Table View -->
-<div class="brands-table-card" id="brandsTable">
-    <div class="table-responsive">
-        <table class="brands-table">
-            <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox" id="selectAll" class="select-checkbox">
-                    </th>
-                    <th>Brand</th>
-                    <th>Kode</th>
-                    <th>Jumlah Produk</th>
-                    <th>Status</th>
-                    <th>Tanggal Dibuat</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/667eea?text=C" alt="Canon">
-                            </div>
-                            <div class="brand-details">
-                                <h4>Canon</h4>
-                                <div class="brand-code">BRD-CAN-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>CANON</td>
-                    <td>342 Produk</td>
-                    <td>
-                        <span class="brand-status featured">Unggulan</span>
-                    </td>
-                    <td>15 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/48bb78?text=S" alt="Sony">
-                            </div>
-                            <div class="brand-details">
-                                <h4>Sony</h4>
-                                <div class="brand-code">BRD-SON-001</div>
-                            </div>
-                        </div>
-                                            </td>
-                    <td>SONY</td>
-                    <td>289 Produk</td>
-                    <td>
-                        <span class="brand-status featured">Unggulan</span>
-                    </td>
-                    <td>15 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/ed8936?text=N" alt="Nikon">
-                            </div>
-                            <div class="brand-details">
-                                <h4>Nikon</h4>
-                                <div class="brand-code">BRD-NIK-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>NIKON</td>
-                    <td>198 Produk</td>
-                    <td>
-                        <span class="brand-status active">Aktif</span>
-                    </td>
-                    <td>14 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/4299e1?text=F" alt="Fujifilm">
-                            </div>
-                            <div class="brand-details">
-                                <h4>Fujifilm</h4>
-                                <div class="brand-code">BRD-FUJ-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>FUJIFILM</td>
-                    <td>156 Produk</td>
-                    <td>
-                        <span class="brand-status active">Aktif</span>
-                    </td>
-                    <td>12 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/764ba2?text=P" alt="Panasonic">
-                            </div>
-                            <div class="brand-details">
-                                <h4>Panasonic</h4>
-                                <div class="brand-code">BRD-PAN-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PANASONIC</td>
-                    <td>89 Produk</td>
-                    <td>
-                        <span class="brand-status active">Aktif</span>
-                    </td>
-                    <td>10 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="checkbox" class="select-checkbox row-checkbox">
-                    </td>
-                    <td>
-                        <div class="brand-info">
-                            <div class="brand-logo-small">
-                                <img src="https://via.placeholder.com/40x40/ffffff/f56565?text=G" alt="GoPro">
-                            </div>
-                            <div class="brand-details">
-                                <h4>GoPro</h4>
-                                <div class="brand-code">BRD-GOP-001</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>GOPRO</td>
-                    <td>42 Produk</td>
-                    <td>
-                        <span class="brand-status active">Aktif</span>
-                    </td>
-                    <td>8 Jan 2024</td>
-                    <td>
-                        <div class="brand-actions">
-                            <button class="action-btn view" title="Lihat Detail">
-                                <i data-feather="eye"></i>
-                            </button>
-                            <button class="action-btn edit" title="Edit Brand">
-                                <i data-feather="edit"></i>
-                            </button>
-                            <button class="action-btn delete" title="Hapus Brand">
-                                <i data-feather="trash-2"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
     <!-- Pagination -->
     <div class="pagination-wrapper">
         <div class="pagination-info">
@@ -1137,10 +764,32 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Feather icons
     feather.replace();
+
+        document.querySelectorAll('.form-delete-brand').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nama = form.getAttribute('data-nama');
+            Swal.fire({
+                title: 'Yakin hapus brand?',
+                text: 'Brand "' + nama + '" akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
     
     // DOM Elements
     const selectAllCheckbox = document.getElementById('selectAll');
@@ -1261,29 +910,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Action buttons for brands
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const action = this.classList.contains('edit') ? 'edit' : 
-                          this.classList.contains('delete') ? 'delete' : 'view';
-            const card = this.closest('.brand-card, tr');
-            const brandId = card.dataset.id;
-            const brandName = card.querySelector('.brand-name, .brand-details h4').textContent;
-            
-            switch(action) {
-                case 'edit':
-                    openEditBrandModal(brandId, brandName);
-                    break;
-                case 'delete':
-                    openDeleteBrandModal(brandId, brandName);
-                    break;
-                case 'view':
-                    openViewBrandModal(brandId);
-                    break;
-            }
-        });
-    });
 
     // Modal functions for brands
     function openEditBrandModal(id, name) {
@@ -1338,17 +964,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Implementation would show filter options
     }
 
-    // Add brand button
-    addBrandBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Opening add brand form');
-        openAddBrandModal();
-    });
+  
 
-    function openAddBrandModal() {
-        console.log('Add brand modal would open here');
-        // Implementation would show add brand form
-    }
 
     // Pagination
     document.querySelectorAll('.pagination-btn:not(.disabled)').forEach(btn => {
