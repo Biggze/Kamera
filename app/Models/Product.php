@@ -27,4 +27,14 @@ class Product extends Model
         'featured' => 'boolean'
     ];
 
+    public function category()
+{
+    return $this->belongsTo(\App\Models\Category::class, 'category_id');
+}
+
+public function brand()
+{
+    return $this->belongsTo(\App\Models\Brand::class, 'brand_id');
+}
+
 }

@@ -9,11 +9,13 @@ use App\Http\Controllers\Admin\ReviewAdminController;
 use App\Http\Controllers\Admin\SettingAdminController;
 use App\Http\Controllers\Admin\ShippingAdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AboutController;
 use App\Http\Controllers\User\BrandController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\ContactController;
+use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,10 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/user/category', [CategoryController::class, 'index'])->name('user.category');
-    Route::get('/user/brand', [BrandController::class, 'index'])->name('user.brand');
-    Route::get('/user/brand/detail', [BrandController::class, 'show'])->name('user.brand.detail');
+    Route::get('/user/product', [ProductController::class, 'index'])->name('user.product');
+    Route::get('/user/brand/detail', [ProductController::class, 'show'])->name('user.brand.detail');
     Route::get('/user/about', [AboutController::class, 'index'])->name('user.about');
     Route::get('/user/contact', [ContactController::class, 'index'])->name('user.contact');
+
+    Route::get('/user/payment', [PaymentController::class, 'index'])->name('user.payment');
 
 });
 Route::middleware(['auth', 'is_admin'])->group(function () {

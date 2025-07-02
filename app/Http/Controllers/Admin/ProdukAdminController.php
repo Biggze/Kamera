@@ -77,13 +77,10 @@ class ProdukAdminController extends Controller
         ]);
 
         try {
-            // Upload gambar utama
             $validated['image'] = $request->file('image')->store('products', 'public');
             
-            // Generate slug from product name
             $validated['slug'] = Str::slug($validated['name']); 
 
-            // Set featured default false jika tidak dicentang
             $validated['featured'] = $request->has('featured');
 
             Product::create($validated);

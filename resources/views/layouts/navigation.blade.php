@@ -301,9 +301,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('user.brand') }}"
-                    class="{{ request()->routeIs('user.brand') ? 'active' : '' }}">
-                        Brand
+                    <a href="{{ route('user.product') }}"
+                    class="{{ request()->routeIs('user.product') ? 'active' : '' }}">
+                        Produk
                     </a>
                 </li>
                 <li>
